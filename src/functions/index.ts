@@ -1,2 +1,3 @@
 import { navigate } from "./navigation/navigate";
-export{navigate}
+import { initFirebase } from "./Firebase/config";
+export { navigate, initFirebase };

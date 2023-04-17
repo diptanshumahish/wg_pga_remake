@@ -1,13 +1,21 @@
 import Welcome from "../Welcome/Welcome";
 import Login from "../Login/Login";
 import HelloScreen from "../Hello/HelloScreen";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { store } from "@/state-mangement/store/store/store";
+import { goBack } from "@/state-mangement/store/slices/changeScreenSlice";
 
 export default function WelcomeWrapper() {
+  useEffect(() => {
+    store.dispatch(goBack());
+  }, []);
   const [screen, setScreen] = useState(0);
-  const Items = [<Welcome />, <Login />,<HelloScreen/>];
+  const Items = [
+    <Welcome key={0} />,
+    <Login key={1} />,
+    <HelloScreen key={2} />,
+  ];
   store.subscribe(() => {
     setScreen(store.getState().screenData);
   });
