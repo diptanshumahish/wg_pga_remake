@@ -4,6 +4,7 @@ import { Table, DoorOpen, User, SignOut } from "@phosphor-icons/react";
 import { getAuth } from "firebase/auth";
 import { goBack } from "@/state-mangement/store/slices/changeScreenSlice";
 import { updateFormEnable } from "@/state-mangement/store/slices/formEnabe";
+import { updateLeaveEnable } from "@/state-mangement/store/slices/leaveEnable";
 
 export default function NavigationPane() {
   useEffect(() => {
@@ -61,6 +62,9 @@ export default function NavigationPane() {
           </div>
 
           <div
+            onClick={() => {
+              store.dispatch(updateLeaveEnable());
+            }}
             className="flex justify-between p-4 bg-white items-center shadow-xl rounded-md cursor-pointer "
             style={{ backgroundColor: "#b8bcc21c" }}
           >
@@ -78,6 +82,9 @@ export default function NavigationPane() {
           </div>
 
           <div
+            onClick={() => {
+              localStorage.clear();
+            }}
             className="flex justify-between p-4 bg-white items-center shadow-xl rounded-md cursor-pointer "
             style={{ backgroundColor: "#b8bcc21c" }}
           >

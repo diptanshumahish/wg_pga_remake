@@ -1,6 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { NavigationPane, RightPane, FormsWrapper } from "@/components";
+import {
+  NavigationPane,
+  RightPane,
+  FormsWrapper,
+  ApplyLeave,
+} from "@/components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { store } from "@/state-mangement/store/store/store";
@@ -8,8 +13,10 @@ import { store } from "@/state-mangement/store/store/store";
 export default function Dashboard() {
   const uid = useRouter().query.uid;
   const [form, setForm] = useState(store.getState().formEnable);
+  const [leave, setLeave] = useState(store.getState().leaveEnable);
   store.subscribe(() => {
     setForm(store.getState().formEnable);
+    setLeave(store.getState().leaveEnable);
   });
   return (
     <>
@@ -32,6 +39,8 @@ export default function Dashboard() {
           }}
         >
           <FormsWrapper visibility={form} />
+          <ApplyLeave visibility={leave} />
+
           <NavigationPane />
           <RightPane />
         </motion.div>

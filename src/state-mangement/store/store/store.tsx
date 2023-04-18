@@ -11,6 +11,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import storeEmail from "../slices/storeEmail";
 import formEnabe from "../slices/formEnabe";
 import formState from "../slices/formState";
+import leaveEnable from "../slices/leaveEnable";
 
 const persistConfig = {
   key: "root",
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   email: storeEmail,
   formEnable: formEnabe,
   formState: formState,
+  leaveEnable:leaveEnable
 });
 const perReducer = persistReducer(persistConfig, reducers);
 

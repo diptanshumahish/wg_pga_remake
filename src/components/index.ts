@@ -9,6 +9,7 @@ import ClockFunctionality from "./home/Clock/clockFunctionality";
 import RightPane from "./Wrappers/RightPaneWrapper";
 import NotesAndLogo from "./home/notesAndLogo/notesAndLogo";
 import FormsWrapper from "./Wrappers/FormWrapper";
+import ApplyLeave from "./home/Leave/applyLeave";
 //exporting the functions
 export {
   Welcome,
@@ -22,4 +23,5 @@ export {
   RightPane,
   NotesAndLogo,
   FormsWrapper,
+  ApplyLeave,
 };
