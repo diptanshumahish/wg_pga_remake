@@ -1,5 +1,8 @@
+import { store } from "@/state-mangement/store/store/store";
 import { Bug, BowlFood } from "@phosphor-icons/react";
+import { useState } from "react";
 export default function ClockFunctionality() {
+  const [dur, setDur] = useState(store.getState().loginTime);
   return (
     <div
       className="right-0 top-0 rounded-md p-8 flex justify-between items-center "
@@ -12,7 +15,7 @@ export default function ClockFunctionality() {
     >
       <div className=" text-white flex flex-col">
         <span>Hours worked</span>
-        <span className="text-8xl">01:23</span>
+        <span className="text-8xl">{dur}</span>
         <span>Keep up the good work!</span>
       </div>
       <div className="flex flex-col gap-2">

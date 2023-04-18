@@ -10,11 +10,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { updateState } from "@/state-mangement/store/slices/authState";
 import { getAuth } from "firebase/auth";
 import { updateProfilePic } from "@/state-mangement/store/slices/profilePic";
-import  { updateUid } from "@/state-mangement/store/slices/uid";
+import { updateUid } from "@/state-mangement/store/slices/uid";
 import { updateEmail } from "@/state-mangement/store/slices/storeEmail";
+import moment from "moment";
+import { setLoginTime } from "@/state-mangement/store/slices/loginTime";
 
 export default function Login() {
-  // const [auth, setAuth] = useState(store.getState().authState);
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
 
@@ -62,6 +63,8 @@ export default function Login() {
               store.dispatch(updateProfilePic(value.user.photoURL));
               store.dispatch(updateUid(value.user.uid));
               store.dispatch(updateEmail(value.user.email));
+              store.dispatch(setLoginTime(moment.now()));
+              
             })
             .then(() => {
               store.dispatch(goFront());

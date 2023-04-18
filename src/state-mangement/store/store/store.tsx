@@ -12,6 +12,7 @@ import storeEmail from "../slices/storeEmail";
 import formEnabe from "../slices/formEnabe";
 import formState from "../slices/formState";
 import leaveEnable from "../slices/leaveEnable";
+import getLoginTime from "../slices/loginTime";
 
 const persistConfig = {
   key: "root",
@@ -27,7 +28,8 @@ const reducers = combineReducers({
   email: storeEmail,
   formEnable: formEnabe,
   formState: formState,
-  leaveEnable:leaveEnable
+  leaveEnable:leaveEnable,
+  loginTime:getLoginTime
 });
 const perReducer = persistReducer(persistConfig, reducers);
 
