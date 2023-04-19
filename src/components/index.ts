@@ -10,6 +10,7 @@ import RightPane from "./Wrappers/RightPaneWrapper";
 import NotesAndLogo from "./home/notesAndLogo/notesAndLogo";
 import FormsWrapper from "./Wrappers/FormWrapper";
 import ApplyLeave from "./home/Leave/applyLeave";
+import TakeBreak from "./home/Break/breakPage";
 //exporting the functions
 export {
   Welcome,
@@ -24,4 +25,5 @@ export {
   NotesAndLogo,
   FormsWrapper,
   ApplyLeave,
+  TakeBreak
 };

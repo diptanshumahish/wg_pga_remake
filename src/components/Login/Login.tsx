@@ -5,7 +5,7 @@ import {
 import { store } from "@/state-mangement/store/store/store";
 import { CaretLeft } from "@phosphor-icons/react";
 import { MainButton } from "@/components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { updateState } from "@/state-mangement/store/slices/authState";
 import { getAuth } from "firebase/auth";
@@ -14,10 +14,18 @@ import { updateUid } from "@/state-mangement/store/slices/uid";
 import { updateEmail } from "@/state-mangement/store/slices/storeEmail";
 import moment from "moment";
 import { setLoginTime } from "@/state-mangement/store/slices/loginTime";
+import Cookie from "js-cookie";
+import { newDay, isLoggedIn, navigate } from "@/functions";
 
 export default function Login() {
+  const [uid, setUid] = useState(store.getState().uid);
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate({ navigateTo: `/dashboard?uid=${uid}`, replace: true });
+    }
+  }, []);
 
   return (
     <div
@@ -64,7 +72,17 @@ export default function Login() {
               store.dispatch(updateUid(value.user.uid));
               store.dispatch(updateEmail(value.user.email));
               store.dispatch(setLoginTime(moment.now()));
-              
+              Cookie.set("isLoggedIn", "true");
+              if (newDay()) {
+                Cookie.set(
+                  "loginDateChecker",
+                  moment(moment.now()).format("DD")
+                );
+                Cookie.set(
+                  "firstLogin",
+                  moment(moment.now()).format("HH:mm:ss")
+                );
+              }
             })
             .then(() => {
               store.dispatch(goFront());

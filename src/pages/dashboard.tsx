@@ -5,6 +5,7 @@ import {
   RightPane,
   FormsWrapper,
   ApplyLeave,
+  TakeBreak,
 } from "@/components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -14,9 +15,11 @@ export default function Dashboard() {
   const uid = useRouter().query.uid;
   const [form, setForm] = useState(store.getState().formEnable);
   const [leave, setLeave] = useState(store.getState().leaveEnable);
+  const [brek, setBrek] = useState(store.getState().breakEnable);
   store.subscribe(() => {
     setForm(store.getState().formEnable);
     setLeave(store.getState().leaveEnable);
+    setBrek(store.getState().breakEnable);
   });
   return (
     <>
@@ -40,6 +43,7 @@ export default function Dashboard() {
         >
           <FormsWrapper visibility={form} />
           <ApplyLeave visibility={leave} />
+          <TakeBreak visibility={brek} />
 
           <NavigationPane />
           <RightPane />

@@ -1,22 +1,21 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 
-const init: number = 0;
+const init: string = "";
 
 const countTime = createSlice({
   name: "countTime",
   initialState: init,
   reducers: {
-    updateTime: (state) => {
-      state = state++;
+    updateTime: (state, action) => {
+      state = action.payload;
       return state;
     },
-    resetTime:(state)=>{
-        state = 0;
-        return state;
-    }
+    resetTime: (state) => {
+      state = "";
+      return state;
+    },
   },
 });
-export const { updateTime } = countTime.actions;
+export const { updateTime, resetTime } = countTime.actions;
 
 export default countTime.reducer;

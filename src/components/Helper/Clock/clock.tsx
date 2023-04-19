@@ -8,16 +8,16 @@ export default function Clock() {
     moment(moment.now()).format("DD MMMM YYYY ")
   );
   useEffect(() => {
-    inti();
+    init;
     return () => {
-      clearInterval("inti");
+      clearInterval(init);
     };
   });
-  function inti() {
-    setInterval(() => {
-      SetTime(moment(moment.now()).format("hh:mm A"));
-    }, 60000);
-  }
+
+  const init = setInterval(() => {
+    SetTime(moment(moment.now()).format("hh:mm A"));
+  }, 60000);
+
   return (
     <div className="absolute top-0 p-8 left-0 flex flex-col items-start">
       <div className="text-white text-4xl font-bold">{time}</div>
