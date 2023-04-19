@@ -3,9 +3,7 @@ import { Bug, BowlFood } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import Cookie from "js-cookie";
 import moment from "moment";
-import {
-  updateTime,
-} from "@/state-mangement/store/slices/countTime";
+import { updateTime } from "@/state-mangement/store/slices/countTime";
 import { updateBreakEnable } from "@/state-mangement/store/slices/enableBreak";
 export default function ClockFunctionality() {
   const [dur, setDur] = useState(store.getState().countTime);
@@ -23,7 +21,7 @@ export default function ClockFunctionality() {
 
   const timer = setInterval(() => {
     var now: string = moment(moment.now()).format("HH:mm:ss");
-    const temp: string|undefined = Cookie.get("firstLogin");
+    const temp: string | undefined = Cookie.get("firstLogin");
     const duration = moment
       .utc(moment(now, "HH:mm:ss").diff(moment(temp, "HH:mm:ss")))
       .subtract(store.getState().subtractBreak)

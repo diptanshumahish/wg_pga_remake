@@ -1,25 +1,40 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
 import {
   NavigationPane,
   RightPane,
   FormsWrapper,
   ApplyLeave,
   TakeBreak,
+  UpdateItem,
 } from "@/components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { store } from "@/state-mangement/store/store/store";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { navigate } from "@/functions";
 
 export default function Dashboard() {
-  const uid = useRouter().query.uid;
+  // const uid = useRouter().query.uid;
   const [form, setForm] = useState(store.getState().formEnable);
   const [leave, setLeave] = useState(store.getState().leaveEnable);
   const [brek, setBrek] = useState(store.getState().breakEnable);
+  const [up, setUp] = useState(store.getState().updateEnable);
   store.subscribe(() => {
     setForm(store.getState().formEnable);
     setLeave(store.getState().leaveEnable);
     setBrek(store.getState().breakEnable);
+    setUp(store.getState().updateEnable);
+  });
+  useEffect(() => {
+    if (
+      Cookies.get("isLoggedIn") === "false" ||
+      Cookies.get("isLoggedIn") === undefined ||
+      Cookies.get("isLoggedIn") === null
+    ) {
+      navigate({ navigateTo: "/", replace: true });
+    }
   });
   return (
     <>
@@ -44,7 +59,7 @@ export default function Dashboard() {
           <FormsWrapper visibility={form} />
           <ApplyLeave visibility={leave} />
           <TakeBreak visibility={brek} />
-
+          <UpdateItem visibility={up} />
           <NavigationPane />
           <RightPane />
         </motion.div>

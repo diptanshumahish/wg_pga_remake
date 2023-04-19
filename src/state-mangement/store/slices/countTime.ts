@@ -11,7 +11,7 @@ const countTime = createSlice({
       return state;
     },
     resetTime: (state) => {
-      state = "";
+      state = init;
       return state;
     },
   },

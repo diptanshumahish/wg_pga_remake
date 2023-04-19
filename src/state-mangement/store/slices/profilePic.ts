@@ -10,8 +10,12 @@ const profilePic = createSlice({
       state = action.payload;
       return state;
     },
+    resetProfilePic :(state)=>{
+      state = init;
+      return state;
+    }
   },
 });
-export const { updateProfilePic } = profilePic.actions;
+export const { updateProfilePic,resetProfilePic } = profilePic.actions;
 
 export default profilePic.reducer;

@@ -13,7 +13,7 @@ import { updateProfilePic } from "@/state-mangement/store/slices/profilePic";
 import { updateUid } from "@/state-mangement/store/slices/uid";
 import { updateEmail } from "@/state-mangement/store/slices/storeEmail";
 import moment from "moment";
-import { setLoginTime } from "@/state-mangement/store/slices/loginTime";
+// import { setLoginTime } from "@/state-mangement/store/slices/loginTime";
 import Cookie from "js-cookie";
 import { newDay, isLoggedIn, navigate } from "@/functions";
 
@@ -67,11 +67,30 @@ export default function Login() {
         onActionChange={() => {
           signInWithEmailAndPassword(getAuth(), userEmail, userPass)
             .then((value) => {
-              store.dispatch(updateState(value.user.displayName));
-              store.dispatch(updateProfilePic(value.user.photoURL));
+              if (value.user.displayName === null) {
+                store.dispatch(updateState("Unset"));
+              } else {
+                store.dispatch(updateState(value.user.displayName));
+              }
+              if (value.user.photoURL === null) {
+                store.dispatch(
+                  updateProfilePic(
+                    "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg"
+                  )
+                );
+              } else {
+                store.dispatch(updateProfilePic(value.user.photoURL));
+              }
               store.dispatch(updateUid(value.user.uid));
-              store.dispatch(updateEmail(value.user.email));
-              store.dispatch(setLoginTime(moment.now()));
+              if (store.getState().email !== value.user.email) {
+                console.log("try");
+                Cookie.set(
+                  "firstLogin",
+                  moment(moment.now()).format("HH:mm:ss")
+                );
+                store.dispatch(updateEmail(value.user.email));
+              }
+
               Cookie.set("isLoggedIn", "true");
               if (newDay()) {
                 Cookie.set(
@@ -83,10 +102,19 @@ export default function Login() {
                   moment(moment.now()).format("HH:mm:ss")
                 );
               }
+
+              if (Cookie.get("firstLogin") === "") {
+                Cookie.set(
+                  "firstLogin",
+                  moment(moment.now()).format("HH:mm:ss")
+                );
+              }
             })
             .then(() => {
               store.dispatch(goFront());
-            });
+            }).catch(()=>{
+              
+            })
         }}
       />
       <span className="text-white text-xs">

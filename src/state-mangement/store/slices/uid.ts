@@ -10,8 +10,12 @@ const uid = createSlice({
       state = action.payload;
       return state;
     },
+    resetUid:(state)=>{
+      state=init;
+      return state;
+    }
   },
 });
-export const { updateUid } = uid.actions;
+export const { updateUid,resetUid } = uid.actions;
 
 export default uid.reducer;

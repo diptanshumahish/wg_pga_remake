@@ -11,6 +11,7 @@ import NotesAndLogo from "./home/notesAndLogo/notesAndLogo";
 import FormsWrapper from "./Wrappers/FormWrapper";
 import ApplyLeave from "./home/Leave/applyLeave";
 import TakeBreak from "./home/Break/breakPage";
+import UpdateItem from "./home/Update/updateItems";
 //exporting the functions
 export {
   Welcome,
@@ -25,5 +26,6 @@ export {
   NotesAndLogo,
   FormsWrapper,
   ApplyLeave,
-  TakeBreak
+  TakeBreak,
+  UpdateItem
 };

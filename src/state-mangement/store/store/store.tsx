@@ -12,10 +12,11 @@ import storeEmail from "../slices/storeEmail";
 import formEnabe from "../slices/formEnabe";
 import formState from "../slices/formState";
 import leaveEnable from "../slices/leaveEnable";
-import getLoginTime from "../slices/loginTime";
+
 import countTime from "../slices/countTime";
 import enableBreak from "../slices/enableBreak";
 import subTractBreak from "../slices/subTractBreak";
+import updateEnable from "../slices/updateEnable";
 
 const persistConfig = {
   key: "root",
@@ -33,9 +34,10 @@ const reducers = combineReducers({
   formState: formState,
   countTime: countTime,
   leaveEnable: leaveEnable,
-  loginTime: getLoginTime,
-  breakEnable:enableBreak,
-  subtractBreak:subTractBreak
+
+  breakEnable: enableBreak,
+  subtractBreak: subTractBreak,
+  updateEnable: updateEnable,
 });
 const perReducer = persistReducer(persistConfig, reducers);
 

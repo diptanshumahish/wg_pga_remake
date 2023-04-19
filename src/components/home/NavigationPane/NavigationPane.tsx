@@ -1,5 +1,5 @@
 import { store } from "@/state-mangement/store/store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Table, DoorOpen, User, SignOut } from "@phosphor-icons/react";
 import { getAuth, signOut } from "firebase/auth";
 import { goBack } from "@/state-mangement/store/slices/changeScreenSlice";
@@ -7,15 +7,26 @@ import { updateFormEnable } from "@/state-mangement/store/slices/formEnabe";
 import { updateLeaveEnable } from "@/state-mangement/store/slices/leaveEnable";
 import Cookie from "js-cookie";
 import { navigate } from "@/functions";
+import { updateter } from "@/state-mangement/store/slices/updateEnable";
+import { resetTime } from "@/state-mangement/store/slices/countTime";
+import { resetProfilePic } from "@/state-mangement/store/slices/profilePic";
+import { resetBreak } from "@/state-mangement/store/slices/subTractBreak";
 
 export default function NavigationPane() {
   useEffect(() => {
     store.dispatch(goBack());
   }, []);
   console.log(getAuth());
-  const profImg = store.getState().profPic;
-  const name = store.getState().authState;
+  const [profImg, setProfImg] = useState(store.getState().profPic);
+  const [name, setName] = useState(store.getState().authState);
+  const auth = getAuth();
+
   const email = store.getState().email;
+
+  store.subscribe(() => {
+    setProfImg(store.getState().profPic);
+    setName(store.getState().authState);
+  });
   return (
     <div
       className=" top-0 left-0  p-4 rounded-md shadow-md flex gap-3 flex-col "
@@ -78,6 +89,9 @@ export default function NavigationPane() {
           <div
             className="flex justify-between p-4  items-center shadow-xl rounded-md cursor-pointer"
             style={{ backgroundColor: "#b8bcc21c" }}
+            onClick={() => {
+              store.dispatch(updateter());
+            }}
           >
             Profile Settings
             <User size={19} />
@@ -85,11 +99,13 @@ export default function NavigationPane() {
 
           <div
             onClick={() => {
-              signOut(getAuth()).then(() => {
-                Cookie.set("isLoggedIn", "false");
-                localStorage.clear();
-                navigate({ navigateTo: "/", replace: true });
-              });
+              signOut(auth)
+                .then(() => {
+                  Cookie.set("isLoggedIn", "false");
+                })
+                .then(() => {
+                  navigate({ navigateTo: "/" });
+                });
             }}
             className="flex justify-between p-4 bg-white items-center shadow-xl rounded-md cursor-pointer "
             style={{ backgroundColor: "#b8bcc21c" }}
