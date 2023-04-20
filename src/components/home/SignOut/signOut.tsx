@@ -45,6 +45,7 @@ export default function SignOutPage({ visibility }: Props) {
               signOut(auth)
                 .then(() => {
                   Cookies.set("isLoggedIn", "false");
+                  Cookies.set("firstLogin", "");
                   store.dispatch(resetBreak());
                 })
                 .then(() => {
