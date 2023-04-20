@@ -11,6 +11,8 @@ import { updateter } from "@/state-mangement/store/slices/updateEnable";
 import { resetTime } from "@/state-mangement/store/slices/countTime";
 import { resetProfilePic } from "@/state-mangement/store/slices/profilePic";
 import { resetBreak } from "@/state-mangement/store/slices/subTractBreak";
+import enableSignout from "@/state-mangement/store/slices/enableSignout";
+import { updateSignout } from "@/state-mangement/store/slices/enableSignout";
 
 export default function NavigationPane() {
   useEffect(() => {
@@ -99,13 +101,7 @@ export default function NavigationPane() {
 
           <div
             onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  Cookie.set("isLoggedIn", "false");
-                })
-                .then(() => {
-                  navigate({ navigateTo: "/" });
-                });
+              store.dispatch(updateSignout());
             }}
             className="flex justify-between p-4 bg-white items-center shadow-xl rounded-md cursor-pointer "
             style={{ backgroundColor: "#b8bcc21c" }}

@@ -12,6 +12,7 @@ import FormsWrapper from "./Wrappers/FormWrapper";
 import ApplyLeave from "./home/Leave/applyLeave";
 import TakeBreak from "./home/Break/breakPage";
 import UpdateItem from "./home/Update/updateItems";
+import SignOutPage from "./home/SignOut/signOut";
 //exporting the functions
 export {
   Welcome,
@@ -27,5 +28,6 @@ export {
   FormsWrapper,
   ApplyLeave,
   TakeBreak,
-  UpdateItem
+  UpdateItem,
+  SignOutPage
 };

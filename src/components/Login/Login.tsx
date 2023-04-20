@@ -16,16 +16,18 @@ import moment from "moment";
 // import { setLoginTime } from "@/state-mangement/store/slices/loginTime";
 import Cookie from "js-cookie";
 import { newDay, isLoggedIn, navigate } from "@/functions";
+import { resetTime } from "@/state-mangement/store/slices/countTime";
 
 export default function Login() {
   const [uid, setUid] = useState(store.getState().uid);
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    if (isLoggedIn()) {
+    if (isLoggedIn() && !newDay()) {
       navigate({ navigateTo: `/dashboard?uid=${uid}`, replace: true });
     }
-  }, []);
+  }, [isLoggedIn(), newDay()]);
 
   return (
     <div
@@ -67,11 +69,13 @@ export default function Login() {
         onActionChange={() => {
           signInWithEmailAndPassword(getAuth(), userEmail, userPass)
             .then((value) => {
+              // set a default full name
               if (value.user.displayName === null) {
                 store.dispatch(updateState("Unset"));
               } else {
                 store.dispatch(updateState(value.user.displayName));
               }
+              // set a default profile picture
               if (value.user.photoURL === null) {
                 store.dispatch(
                   updateProfilePic(
@@ -81,17 +85,20 @@ export default function Login() {
               } else {
                 store.dispatch(updateProfilePic(value.user.photoURL));
               }
+              // set uid
               store.dispatch(updateUid(value.user.uid));
+
+              // different user
               if (store.getState().email !== value.user.email) {
-                console.log("try");
                 Cookie.set(
                   "firstLogin",
                   moment(moment.now()).format("HH:mm:ss")
                 );
                 store.dispatch(updateEmail(value.user.email));
               }
-
+              // login cookie
               Cookie.set("isLoggedIn", "true");
+              // new day
               if (newDay()) {
                 Cookie.set(
                   "loginDateChecker",
@@ -101,7 +108,9 @@ export default function Login() {
                   "firstLogin",
                   moment(moment.now()).format("HH:mm:ss")
                 );
+                store.dispatch(resetTime());
               }
+              // in case of multiple accounts
 
               if (Cookie.get("firstLogin") === "") {
                 Cookie.set(
@@ -109,14 +118,22 @@ export default function Login() {
                   moment(moment.now()).format("HH:mm:ss")
                 );
               }
-            })
-            .then(() => {
               store.dispatch(goFront());
-            }).catch(()=>{
-              
             })
+
+            .catch((e) => {
+              setShow(true);
+            });
         }}
       />
+      <span
+        className="text-red"
+        style={{
+          display: show ? "block" : "none",
+        }}
+      >
+        Wrong credentials, Try again!
+      </span>
       <span className="text-white text-xs">
         By logging in you agree to our terms
       </span>

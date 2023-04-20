@@ -7,6 +7,7 @@ import {
   ApplyLeave,
   TakeBreak,
   UpdateItem,
+  SignOutPage,
 } from "@/components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -21,11 +22,13 @@ export default function Dashboard() {
   const [leave, setLeave] = useState(store.getState().leaveEnable);
   const [brek, setBrek] = useState(store.getState().breakEnable);
   const [up, setUp] = useState(store.getState().updateEnable);
+  const [signout, setsignout] = useState(store.getState().enableSignout);
   store.subscribe(() => {
     setForm(store.getState().formEnable);
     setLeave(store.getState().leaveEnable);
     setBrek(store.getState().breakEnable);
     setUp(store.getState().updateEnable);
+    setsignout(store.getState().enableSignout);
   });
   useEffect(() => {
     if (
@@ -60,6 +63,8 @@ export default function Dashboard() {
           <ApplyLeave visibility={leave} />
           <TakeBreak visibility={brek} />
           <UpdateItem visibility={up} />
+          <SignOutPage visibility={signout} />
+
           <NavigationPane />
           <RightPane />
         </motion.div>

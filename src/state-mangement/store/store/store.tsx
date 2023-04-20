@@ -17,6 +17,7 @@ import countTime from "../slices/countTime";
 import enableBreak from "../slices/enableBreak";
 import subTractBreak from "../slices/subTractBreak";
 import updateEnable from "../slices/updateEnable";
+import enableSignout from "../slices/enableSignout";
 
 const persistConfig = {
   key: "root",
@@ -34,7 +35,7 @@ const reducers = combineReducers({
   formState: formState,
   countTime: countTime,
   leaveEnable: leaveEnable,
-
+  enableSignout: enableSignout,
   breakEnable: enableBreak,
   subtractBreak: subTractBreak,
   updateEnable: updateEnable,
