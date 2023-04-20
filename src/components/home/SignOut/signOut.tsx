@@ -1,5 +1,6 @@
 import { navigate } from "@/functions";
 import { updateSignout } from "@/state-mangement/store/slices/enableSignout";
+import { resetBreak } from "@/state-mangement/store/slices/subTractBreak";
 import { store } from "@/state-mangement/store/store/store";
 import { getAuth, signOut } from "firebase/auth";
 import Cookies from "js-cookie";
@@ -44,6 +45,7 @@ export default function SignOutPage({ visibility }: Props) {
               signOut(auth)
                 .then(() => {
                   Cookies.set("isLoggedIn", "false");
+                  store.dispatch(resetBreak());
                 })
                 .then(() => {
                   store.dispatch(updateSignout());
