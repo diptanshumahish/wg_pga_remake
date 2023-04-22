@@ -8,6 +8,7 @@ import {
   TakeBreak,
   UpdateItem,
   SignOutPage,
+  SendMail,
 } from "@/components";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
@@ -23,12 +24,14 @@ export default function Dashboard() {
   const [brek, setBrek] = useState(store.getState().breakEnable);
   const [up, setUp] = useState(store.getState().updateEnable);
   const [signout, setsignout] = useState(store.getState().enableSignout);
+  const [enableMail, setEnableMail] = useState(store.getState().enableMail);
   store.subscribe(() => {
     setForm(store.getState().formEnable);
     setLeave(store.getState().leaveEnable);
     setBrek(store.getState().breakEnable);
     setUp(store.getState().updateEnable);
     setsignout(store.getState().enableSignout);
+    setEnableMail(store.getState().enableMail);
   });
   useEffect(() => {
     if (
@@ -64,6 +67,7 @@ export default function Dashboard() {
           <TakeBreak visibility={brek} />
           <UpdateItem visibility={up} />
           <SignOutPage visibility={signout} />
+          <SendMail visibility={enableMail} />
 
           <NavigationPane />
           <RightPane />

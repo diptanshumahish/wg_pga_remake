@@ -13,6 +13,7 @@ import ApplyLeave from "./home/Leave/applyLeave";
 import TakeBreak from "./home/Break/breakPage";
 import UpdateItem from "./home/Update/updateItems";
 import SignOutPage from "./home/SignOut/signOut";
+import SendMail from "./Wrappers/sendMails";
 //exporting the functions
 export {
   Welcome,
@@ -29,5 +30,6 @@ export {
   ApplyLeave,
   TakeBreak,
   UpdateItem,
-  SignOutPage
+  SignOutPage,
+  SendMail,
 };

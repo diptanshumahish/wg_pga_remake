@@ -1,18 +1,19 @@
 import { store } from "@/state-mangement/store/store/store";
 import { useEffect, useState } from "react";
-import { Table, DoorOpen, User, SignOut } from "@phosphor-icons/react";
-import { getAuth, signOut } from "firebase/auth";
+import {
+  Table,
+  DoorOpen,
+  User,
+  SignOut,
+  Envelope,
+} from "@phosphor-icons/react";
+import { getAuth } from "firebase/auth";
 import { goBack } from "@/state-mangement/store/slices/changeScreenSlice";
 import { updateFormEnable } from "@/state-mangement/store/slices/formEnabe";
 import { updateLeaveEnable } from "@/state-mangement/store/slices/leaveEnable";
-import Cookie from "js-cookie";
-import { navigate } from "@/functions";
 import { updateter } from "@/state-mangement/store/slices/updateEnable";
-import { resetTime } from "@/state-mangement/store/slices/countTime";
-import { resetProfilePic } from "@/state-mangement/store/slices/profilePic";
-import { resetBreak } from "@/state-mangement/store/slices/subTractBreak";
-import enableSignout from "@/state-mangement/store/slices/enableSignout";
 import { updateSignout } from "@/state-mangement/store/slices/enableSignout";
+import { updateMail } from "@/state-mangement/store/slices/enableMail";
 
 export default function NavigationPane() {
   useEffect(() => {
@@ -74,6 +75,17 @@ export default function NavigationPane() {
             style={{ backgroundColor: "#b8bcc21c" }}
           >
             Form Submissions <Table size={19} />
+          </div>
+
+          {/* for the mailing  */}
+          <div
+            onClick={() => {
+              store.dispatch(updateMail());
+            }}
+            className="flex justify-between p-4  items-center shadow-xl rounded-md cursor-pointer"
+            style={{ backgroundColor: "#b8bcc21c" }}
+          >
+            Mailing <Envelope size={19} />
           </div>
 
           <div
