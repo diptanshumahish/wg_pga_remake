@@ -3,6 +3,9 @@ import { updateMail } from "@/state-mangement/store/slices/enableMail";
 import { store } from "@/state-mangement/store/store/store";
 import { XCircle } from "@phosphor-icons/react";
 import { useState } from "react";
+import { parse } from "papaparse";
+import { spawn } from "child_process";
+import { resetHtml, setHtml } from "@/state-mangement/store/slices/storeHtml";
 interface Props {
   visibility: boolean;
 }
@@ -11,7 +14,12 @@ export default function SendMail({ visibility }: Props) {
   const [emails, setEmails] = useState([]);
   const [subject, setSubject] = useState("");
   const [plainText, setPlainText] = useState("");
-  const [html, setHtml] = useState("");
+  const [htmlText, setHtmlText] = useState(store.getState().changeHtml);
+  const [highlight, setHighight] = useState(false);
+  const [drop, setDrop] = useState("Drop CSV your file here");
+  store.subscribe(() => {
+    setHtmlText(store.getState().changeHtml);
+  });
   return (
     <div
       className="top-0 absolute left-0 bottom-0 z-10"
@@ -38,6 +46,7 @@ export default function SendMail({ visibility }: Props) {
               className="cursor-pointer"
               onClick={() => {
                 store.dispatch(updateMail());
+                store.dispatch(resetHtml());
               }}
             />
           </span>
@@ -52,8 +61,37 @@ export default function SendMail({ visibility }: Props) {
                 1. Enter the emails as a CSV File below
               </div>
               <div className="flex justify-between pt-2 items-center">
-                <div className="bg-slate-800 p-4 rounded-md cursor-pointer">
-                  Drag and drop your CSV file here
+                <div
+                  className="bg-slate-800 p-4 rounded-md cursor-pointer w-max"
+                  style={{ backgroundColor: highlight ? "green" : "#1e293b" }}
+                  onDragEnter={() => {
+                    console.log("hi");
+                    setHighight(true);
+                    setDrop("Drop the file here");
+                  }}
+                  onDragLeave={() => {
+                    setHighight(false);
+                    setDrop("Drop CSV your file here");
+                  }}
+                  onDragOver={(e) => {
+                    setHighight(true);
+                    e.preventDefault();
+                    console.log("drag");
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setHighight(false);
+
+                    Array.from(e.dataTransfer.files)
+                      .filter((ele) => ele.type === "text/csv")
+                      .forEach(async (ele) => {
+                        const text = await ele.text();
+                        const res = await parse(text, { header: true });
+                        setEmails(res.data);
+                      });
+                  }}
+                >
+                  {drop}
                 </div>
                 OR
                 <div className="flex gap-2 items-center">
@@ -62,8 +100,20 @@ export default function SendMail({ visibility }: Props) {
                     type="file"
                     placeholder="click here to upload"
                     className="bg-slate-800 p-4 rounded-md cursor-pointer hover:bg-opacity-70"
-                    accept="csv"
+                    accept="text/csv"
                     name="CSV"
+                    onChange={(e) => {
+                      console.log("ji");
+                      if (e.target.files !== null) {
+                        Array.from(e.target.files)
+                          .filter((ele) => ele.type === "text/csv")
+                          .forEach(async (ele) => {
+                            const text = await ele.text();
+                            const res = await parse(text, { header: true });
+                            setEmails(res.data);
+                          });
+                      }
+                    }}
                   />
                   <label htmlFor="CSV">Upload CSV</label>
                 </div>
@@ -77,6 +127,9 @@ export default function SendMail({ visibility }: Props) {
                 type="text"
                 name="subject"
                 className="w-[100%] p-2 rounded-md bg-formBack mt-2 focus:outline-none focus:bg-slate-800 "
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                }}
                 placeholder="Enter the mail Subject"
                 required
               />
@@ -91,21 +144,24 @@ export default function SendMail({ visibility }: Props) {
                 name="plainText"
                 className="w-[100%] p-2 rounded-md bg-formBack mt-2 focus:outline-none focus:bg-slate-800 "
                 placeholder="Enter the mail plaint text"
+                onChange={(e) => {
+                  setPlainText(e.target.value);
+                }}
                 required
               />
             </div>
 
             {/* enter the rich html  */}
             <div>
-              <div className="text-xl">
-                4. Enter the richly formatted html (optional)
-              </div>
-              <input
-                type="file"
+              <div className="text-xl">4. Enter the richly formatted html</div>
+              <textarea
                 name="html"
-                accept="html"
-                className=" p-2 rounded-md bg-formBack mt-2 focus:outline-none focus:bg-slate-800 cursor-pointer "
-                placeholder="Enter the mail plaint text"
+                className=" p-2 rounded-md bg-formBack mt-2 focus:outline-none focus:bg-slate-800 w-[100%] "
+                placeholder="Enter the html mail"
+                onChange={(e) => {
+                  store.dispatch(setHtml(e.target.value));
+                  console.log(store.getState().changeHtml);
+                }}
               />
             </div>
 
@@ -113,11 +169,66 @@ export default function SendMail({ visibility }: Props) {
             <button
               className="bg-primary p-2 rounded-sm"
               onClick={() => {
-                sendMessage();
+                sendMessage({
+                  html: htmlText,
+                  subject: subject,
+                  text: "some text",
+                  to: emails,
+                });
               }}
             >
               Submit
             </button>
+
+            {/* render output */}
+            {emails.length !== 0 && (
+              <div>
+                <span className="text-2xl ">Preview Reciepents</span>{" "}
+                <table className="bg-formBack rounded-md w-[100%] ">
+                  <tr className="bg-primary">
+                    <th className="text-left p-4 ">Email</th>
+                    <th className="text-left p-4">Name</th>
+                  </tr>
+
+                  {emails.map((ele, idx) => {
+                    return (
+                      <tr className="">
+                        <td className="p-4 text-white">{ele.name}</td>
+                        <td className="p-4 text-white">{ele.email}</td>
+                      </tr>
+                    );
+                  })}
+                </table>
+              </div>
+            )}
+
+            {htmlText !== `unset` && (
+              <div className="p-4">
+                <div className="text-2xl">Preview Email</div>
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-4">
+                    <div>To: </div>
+                    <div className="flex flex-col">
+                      {emails.map((ele) => {
+                        return <span>{ele.email}</span>;
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div>Subject:</div>
+                    <div className="flex ">{subject}</div>
+                  </div>
+                  <div
+                    className="text-slate-950"
+                    style={{ color: "unset" }}
+                    dangerouslySetInnerHTML={{
+                      __html: htmlText,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

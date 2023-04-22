@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useRouter, Router } from "next/router";
 import {
   NavigationPane,
   RightPane,

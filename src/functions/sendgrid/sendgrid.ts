@@ -1,36 +1,37 @@
+import  { updateMail } from "@/state-mangement/store/slices/enableMail";
+import { resetHtml } from "@/state-mangement/store/slices/storeHtml";
+import { store } from "@/state-mangement/store/store/store";
 import sgMail from "@sendgrid/mail";
 
 interface Message {
-  to: string;
+  to: { name: string; email: string }[];
   from?: string;
   subject: string;
   text: string;
   html: string;
 }
 const API_KEY =
-  "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";
+  "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";
 
-sgMail.setApiKey(API_KEY);
-
-function getEmails(): string[] {
-  return [];
-}
-function sendMessage() {
-  var message = {
-    to: 'diptanshumahish2016@gmail.com',
-    text: 'hello there',
-    from: 'mahishdiptanshumahish@gmail.com',
-    html: '<strong>hello there </strong>',
-    subject: 'A simple mail',
-  };
-  sgMail
-    .send(message)
-    .then(() => {
-      console.log("sent");
-    })
-    .catch((e) => {
-      // console.log(e);
-    });
+function sendMessage({ to, from, html, subject, text }: Message) {
+  const emails = to;
+  emails.forEach(async (ele) => {
+    const message = {
+      to: ele.email,
+      from: "diptanshu.mahish.21@aot.edu.in",
+      subject: subject,
+      text: text,
+      html: `<h4>Hi ${ele.name},</h4> <br>${html}`,
+    };
+    sgMail.setApiKey(API_KEY);
+    try {
+      await sgMail.send(message);
+      store.dispatch(resetHtml());
+      store.dispatch(updateMail())
+    } catch (error) {
+      console.log(error);
+    }
+  });
 }
 
-export { getEmails, sendMessage };
+export { sendMessage };

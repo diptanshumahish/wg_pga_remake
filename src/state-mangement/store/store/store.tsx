@@ -19,6 +19,7 @@ import subTractBreak from "../slices/subTractBreak";
 import updateEnable from "../slices/updateEnable";
 import enableSignout from "../slices/enableSignout";
 import enableMail from "../slices/enableMail";
+import storeHtml from "../slices/storeHtml";
 
 const persistConfig = {
   key: "root",
@@ -40,7 +41,8 @@ const reducers = combineReducers({
   breakEnable: enableBreak,
   subtractBreak: subTractBreak,
   updateEnable: updateEnable,
-  enableMail:enableMail
+  enableMail:enableMail,
+  changeHtml:storeHtml
 });
 const perReducer = persistReducer(persistConfig, reducers);
 
