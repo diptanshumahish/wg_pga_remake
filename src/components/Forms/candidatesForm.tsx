@@ -5,8 +5,16 @@ import FormHeading from "../FormInputs/FormHeadings";
 import MainInput from "../FormInputs/mainInput";
 import { useState } from "react";
 import MainButton from "../Buttons/mainButton";
+import moment from "moment";
+import { initFirebase, updateScore } from "@/functions";
+import { setDoc, doc, getFirestore, Timestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { DotLoader } from "react-spinners";
 
 export default function CandidatesForm() {
+  // animation
+  const [showDotLoader, setShowDotLoader] = useState(false);
+
   const [fullName, setFullName] = useState("");
   const [date, setDate] = useState("");
   const [technology, setTechnology] = useState("");
@@ -30,6 +38,7 @@ export default function CandidatesForm() {
   const [currentUserEmail, setCurrentUserEmail] = useState(
     store.getState().email
   );
+  const app = initFirebase();
 
   return (
     <div
@@ -244,14 +253,83 @@ export default function CandidatesForm() {
             key={196}
           />
 
-          <MainButton
-            mainContent="Submit"
-            onActionChange={() => {
-              store.dispatch(updateFormNumber(0));
-            }}
-          />
+          {showDotLoader ? (
+            <div className="w-[100%] flex items-center justify-center ">
+              <DotLoader color="white" />
+            </div>
+          ) : (
+            <MainButton
+              mainContent="Submit"
+              onActionChange={() => {
+                update().then(() => {
+                  store.dispatch(updateFormNumber(0));
+                });
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
   );
+  async function update() {
+    const mom = moment(moment.now()).format("Do MMMM  YYYY,h:mm:ss a ");
+    const db = getFirestore();
+    const emailOwn = store.getState().email;
+    await updateScore();
+    setShowDotLoader(true);
+    await setDoc(
+      await doc(db, "candidates", `${emailOwn} + ${mom}`),
+      {
+        Date: date,
+        Name: fullName,
+        Technology: technology,
+        Visa: visa,
+        Experience: experience,
+        W2: w2,
+        Loc: location,
+        education: education,
+        oneTwoJob: oneTwoJob,
+        Onsite: onesitOrRemote,
+        Rate: rate,
+        Email: email,
+        MobileNumber: mob,
+        SSN: ssn,
+        LinkedIn: linkedIn,
+        PaymentMode: payementMode,
+        Us: usYear,
+        Availability: availability,
+        Support: support,
+        Comments: comments,
+        SubmissionDate: Timestamp.now(),
+        submittedBy: emailOwn,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setShowDotLoader(false);
+        toast.success("form submitted", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch(() => {
+        setShowDotLoader(false);
+        toast.error("Try again or reload the page", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  }
 }
