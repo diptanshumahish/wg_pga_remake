@@ -13,10 +13,10 @@ import { updateProfilePic } from "@/state-mangement/store/slices/profilePic";
 import { updateUid } from "@/state-mangement/store/slices/uid";
 import { updateEmail } from "@/state-mangement/store/slices/storeEmail";
 import moment from "moment";
-// import { setLoginTime } from "@/state-mangement/store/slices/loginTime";
 import Cookie from "js-cookie";
-import { newDay, isLoggedIn, navigate } from "@/functions";
+import { newDay, isLoggedIn, navigate, getOS } from "@/functions";
 import { resetTime } from "@/state-mangement/store/slices/countTime";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [uid, setUid] = useState(store.getState().uid);
@@ -27,6 +27,9 @@ export default function Login() {
     const day = newDay();
     if (isLoggedIn() && !day) {
       navigate({ navigateTo: `/dashboard?uid=${uid}`, replace: true });
+    }
+    if (getOS() !== "Windows") {
+      navigate({ navigateTo: "/error", replace: true });
     }
   }, [isLoggedIn(), newDay(), uid]);
 
@@ -121,9 +124,18 @@ export default function Login() {
               }
               store.dispatch(goFront());
             })
-
             .catch((e) => {
               setShow(true);
+              toast.error("Wrong credentials,try again", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
             });
         }}
       />

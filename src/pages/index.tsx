@@ -1,5 +1,7 @@
 import { WelcomeWrapper, Clock } from "@/components";
 import Head from "next/head";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   return (
     <>
@@ -18,26 +20,37 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-        <div
-          className="h-screen w-screen flex  flex-col  items-center justify-center"
-          style={{
-            backgroundImage: "url(/images/background.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <WelcomeWrapper />
-          <Clock />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
-          <div
-            className="absolute bottom-0 right-0 text-white p-2"
-            style={{ letterSpacing: "0.2rem" }}
-          >
-            &copy; Warrior&apos;s group LLC 2023
-          </div>
+      <div
+        className="h-screen w-screen flex  flex-col  items-center justify-center"
+        style={{
+          backgroundImage: "url(/images/background.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <WelcomeWrapper />
+        <Clock />
+
+        <div
+          className="absolute bottom-0 right-0 text-white p-2"
+          style={{ letterSpacing: "0.2rem" }}
+        >
+          &copy; Warrior&apos;s group LLC 2023
         </div>
-      
+      </div>
     </>
   );
 }

@@ -112,7 +112,10 @@ export default function NotesCompoenents() {
             );
           } else {
             return (
-              <div className=" text-white opacity-50 w-[100%] h=[100%] flex items-center justify-center"></div>
+              <div
+                key="invalid"
+                className=" text-white opacity-50 w-[100%] h=[100%] flex items-center justify-center"
+              ></div>
             );
           }
         })}
