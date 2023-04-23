@@ -17,6 +17,7 @@ import Cookie from "js-cookie";
 import { newDay, isLoggedIn, navigate, getOS } from "@/functions";
 import { resetTime } from "@/state-mangement/store/slices/countTime";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [uid, setUid] = useState(store.getState().uid);
@@ -73,6 +74,27 @@ export default function Login() {
         onActionChange={() => {
           signInWithEmailAndPassword(getAuth(), userEmail, userPass)
             .then((value) => {
+              // second time login
+              if (Cookies.get("updateDate") === "updated") {
+                Cookies.set(
+                  "updateDate",
+                  moment(moment.now()).format("DD/MMMM/YYYY")
+                );
+                toast.warn(
+                  "You are logging in the second time today, previous data loss might occur",
+                  {
+                    position: "top-right",
+                    autoClose: 9000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  }
+                );
+              }
+
               // set a default full name
               if (value.user.displayName === null) {
                 store.dispatch(updateState("Unset"));
@@ -111,6 +133,10 @@ export default function Login() {
                 Cookie.set(
                   "firstLogin",
                   moment(moment.now()).format("HH:mm:ss")
+                );
+                Cookies.set(
+                  "updateDate",
+                  moment(moment.now()).format("DD/MMMM/YYYY")
                 );
                 store.dispatch(resetTime());
               }

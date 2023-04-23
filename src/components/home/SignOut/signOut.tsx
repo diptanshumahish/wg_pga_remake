@@ -4,6 +4,7 @@ import { resetNotes } from "@/state-mangement/store/slices/notes";
 import { resetBreak } from "@/state-mangement/store/slices/subTractBreak";
 import { store } from "@/state-mangement/store/store/store";
 import { getAuth, signOut } from "firebase/auth";
+import { Timestamp, doc, getFirestore, setDoc } from "firebase/firestore";
 import Cookies from "js-cookie";
 
 interface Props {
@@ -11,7 +12,9 @@ interface Props {
 }
 
 export default function SignOutPage({ visibility }: Props) {
+  const db = getFirestore();
   const auth = getAuth();
+  const em = store.getState().email;
   return (
     <div
       className="top-0 absolute left-0 bottom-0 z-10"
@@ -43,15 +46,31 @@ export default function SignOutPage({ visibility }: Props) {
           <button
             className="bg-red p-2 rounded-md"
             onClick={() => {
-              signOut(auth)
+              setDoc(
+                doc(db, "workHour", em),
+                {
+                  [`${Cookies.get("updateDate")}`]: store.getState().countTime,
+                },
+                { merge: true }
+              )
                 .then(() => {
-                  Cookies.set("isLoggedIn", "false");
-                  Cookies.set("firstLogin", "");
-                  store.dispatch(resetBreak());
+                  Cookies.set("updateDate", "updated");
+                  signOut(auth)
+                    .then(() => {
+                      Cookies.set("isLoggedIn", "false");
+                      Cookies.set("firstLogin", "");
+                      store.dispatch(resetBreak());
+                    })
+                    .then(() => {
+                      store.dispatch(updateSignout());
+                      navigate({ navigateTo: "/", replace: true });
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
                 })
-                .then(() => {
-                  store.dispatch(updateSignout());
-                  navigate({ navigateTo: "/" });
+                .catch((e) => {
+                  console.log(e);
                 });
             }}
           >
