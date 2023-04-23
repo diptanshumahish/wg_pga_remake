@@ -25,7 +25,7 @@ export default function NotesCompoenents() {
           className=" p-4 rounded-md flex items-center justify-center text-white font-bold"
           onClick={() => {
             if (addnote !== "") {
-              const tim = moment(moment.now()).format("DD/MM hh/mm");
+              const tim = moment(moment.now()).format("Do MMMM hh:mm a");
               setNotes((prev) =>
                 prev.filter((e) => {
                   return e.note !== "";
@@ -106,7 +106,7 @@ export default function NotesCompoenents() {
                     store.dispatch(setNotesArray(notes));
                   }}
                 >
-                  <Trash color="white" />
+                  <Trash color="white" className="cursor-pointer" />
                 </div>
               </div>
             );

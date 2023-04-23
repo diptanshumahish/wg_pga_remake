@@ -5,8 +5,16 @@ import { CaretLeft } from "@phosphor-icons/react";
 import MainButton from "../Buttons/mainButton";
 import { store } from "@/state-mangement/store/store/store";
 import { updateFormNumber } from "@/state-mangement/store/slices/formState";
+import { DotLoader } from "react-spinners";
+import { updateScore } from "@/functions";
+import { getFirestore, setDoc, doc, Timestamp } from "firebase/firestore";
+import moment, { duration } from "moment";
+import { toast } from "react-toastify";
 
 export default function SubmissionForm() {
+  // animation
+  const [showDotLoader, setShowDotLoader] = useState(false);
+
   const [fullName, setFullName] = useState("");
   const [date, setDate] = useState("");
   const [rate, setRate] = useState("");
@@ -131,14 +139,73 @@ export default function SubmissionForm() {
             key={196}
           />
 
-          <MainButton
-            mainContent="Submit"
-            onActionChange={() => {
-              store.dispatch(updateFormNumber(0));
-            }}
-          />
+          {showDotLoader ? (
+            <div className="w-[100%] flex items-center justify-center ">
+              <DotLoader color="white" />
+            </div>
+          ) : (
+            <MainButton
+              mainContent="Submit"
+              onActionChange={() => {
+                update().then(() => {
+                  store.dispatch(updateFormNumber(0));
+                });
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
   );
+  async function update() {
+    const mom = moment(moment.now()).format("Do MMMM  YYYY,h:mm:ss a ");
+    const db = getFirestore();
+    const emailOwn = store.getState().email;
+    await updateScore();
+    setShowDotLoader(true);
+    await setDoc(
+      await doc(db, "submissions", `${emailOwn} + ${mom}`),
+      {
+        Date: date,
+        Name: fullName,
+        Rate: rate,
+        Email: formEmail,
+        Organization: org,
+        MobileNumber: mob,
+        Candidate: candidate,
+        EndClient: endClient,
+        Recruiter: recruit,
+        Feedback: feedBack,
+        SubmissionDate: Timestamp.now(),
+        submittedBy: emailOwn,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setShowDotLoader(false);
+        toast.success("form submitted", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch(() => {
+        setShowDotLoader(false);
+        toast.error("Try again or reload the page", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  }
 }

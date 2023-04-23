@@ -5,8 +5,16 @@ import FormHeading from "../FormInputs/FormHeadings";
 import MainInput from "../FormInputs/mainInput";
 import { useState } from "react";
 import MainButton from "../Buttons/mainButton";
+import { DotLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { updateScore } from "@/functions";
+import moment from "moment";
+import { Timestamp, doc, getFirestore, setDoc } from "firebase/firestore";
 
 export default function ClientForm() {
+  // animation
+  const [showDotLoader, setShowDotLoader] = useState(false);
+
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [mob, setMob] = useState("");
@@ -95,14 +103,70 @@ export default function ClientForm() {
             key={196}
           />
 
-          <MainButton
-            mainContent="Submit"
-            onActionChange={() => {
-              store.dispatch(updateFormNumber(0));
-            }}
-          />
+          {showDotLoader ? (
+            <div className="w-[100%] flex items-center justify-center ">
+              <DotLoader color="white" />
+            </div>
+          ) : (
+            <MainButton
+              mainContent="Submit"
+              onActionChange={() => {
+                update().then(() => {
+                  store.dispatch(updateFormNumber(0));
+                });
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
   );
+
+  async function update() {
+    const mom = moment(moment.now()).format("Do MMMM  YYYY,h:mm:ss a ");
+    const db = getFirestore();
+    const emailOwn = store.getState().email;
+    await updateScore();
+    setShowDotLoader(true);
+    await setDoc(
+      await doc(db, "clients", `${emailOwn} + ${mom}`),
+      {
+        Name: fullname,
+        Email: email,
+        MobileNumber: mob,
+        Organization: org,
+        Recruiter: recruit,
+        Comments: comments,
+        SubmissionDate: Timestamp.now(),
+        submittedBy: emailOwn,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setShowDotLoader(false);
+        toast.success("form submitted", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch(() => {
+        setShowDotLoader(false);
+        toast.error("Try again or reload the page", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  }
 }

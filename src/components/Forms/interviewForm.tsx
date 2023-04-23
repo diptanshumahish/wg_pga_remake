@@ -5,8 +5,16 @@ import { useState } from "react";
 import FormHeading from "../FormInputs/FormHeadings";
 import MainInput from "../FormInputs/mainInput";
 import MainButton from "../Buttons/mainButton";
+import { DotLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { updateScore } from "@/functions";
+import moment from "moment";
+import { Timestamp, doc, getFirestore, setDoc } from "firebase/firestore";
 
 export default function Interview() {
+  // animation
+  const [showDotLoader, setShowDotLoader] = useState(false);
+
   const [date, setDate] = useState("");
   const [candidateName, setCandidateName] = useState("");
   const [timing, setTiming] = useState("");
@@ -14,6 +22,7 @@ export default function Interview() {
   const [duration, setDuration] = useState("");
   const [support, setSupport] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [technology, setTechnology] = useState("");
   const [currentUserEmail, setCurrentUserEmail] = useState(
     store.getState().email
   );
@@ -68,6 +77,14 @@ export default function Interview() {
           setVarName={setRound}
           key={96}
         />
+        {/* technology*/}
+        <FormHeading title="Technology" key={8098} />
+        <MainInput
+          placeHolder="Technology"
+          type="text"
+          setVarName={setTechnology}
+          key={98979}
+        />
         {/* call duration */}
         <FormHeading title="Call duration" key={5} />
         <MainInput
@@ -104,13 +121,71 @@ export default function Interview() {
           key={196}
         />
 
-        <MainButton
-          mainContent="Submit"
-          onActionChange={() => {
-            store.dispatch(updateFormNumber(0));
-          }}
-        />
+        {showDotLoader ? (
+          <div className="w-[100%] flex items-center justify-center ">
+            <DotLoader color="white" />
+          </div>
+        ) : (
+          <MainButton
+            mainContent="Submit"
+            onActionChange={() => {
+              update().then(() => {
+                store.dispatch(updateFormNumber(0));
+              });
+            }}
+          />
+        )}
       </div>
     </div>
   );
+
+  async function update() {
+    const mom = moment(moment.now()).format("Do MMMM  YYYY,h:mm:ss a ");
+    const db = getFirestore();
+    const emailOwn = store.getState().email;
+    await updateScore();
+    setShowDotLoader(true);
+    await setDoc(
+      await doc(db, "interviews", `${emailOwn} + ${mom}`),
+      {
+        CandidateName: candidateName,
+        CallDuration: duration,
+        Date: date,
+        Round: round,
+        Support: support,
+        Technology: technology,
+        Timing: timing,
+        Feedback: feedback,
+        SubmissionDate: Timestamp.now(),
+        submittedBy: emailOwn,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setShowDotLoader(false);
+        toast.success("form submitted", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch(() => {
+        setShowDotLoader(false);
+        toast.error("Try again or reload the page", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  }
 }

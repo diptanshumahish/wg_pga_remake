@@ -5,8 +5,16 @@ import { store } from "@/state-mangement/store/store/store";
 import MainButton from "../Buttons/mainButton";
 import { updateFormNumber } from "@/state-mangement/store/slices/formState";
 import { CaretLeft } from "@phosphor-icons/react";
+import { DotLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { updateScore } from "@/functions";
+import { getFirestore, setDoc, doc, Timestamp } from "firebase/firestore";
+import moment, { duration } from "moment";
 
 export default function Recruiting() {
+  // animation
+  const [showDotLoader, setShowDotLoader] = useState(false);
+
   const [date, setDate] = useState("");
   const [fullName, setFullName] = useState("");
   const [visa, setVisa] = useState("");
@@ -145,13 +153,75 @@ export default function Recruiting() {
           key={196}
         />
 
-        <MainButton
-          mainContent="Submit"
-          onActionChange={() => {
-            store.dispatch(updateFormNumber(0));
-          }}
-        />
+        {showDotLoader ? (
+          <div className="w-[100%] flex items-center justify-center ">
+            <DotLoader color="white" />
+          </div>
+        ) : (
+          <MainButton
+            mainContent="Submit"
+            onActionChange={() => {
+              update().then(() => {
+                store.dispatch(updateFormNumber(0));
+              });
+            }}
+          />
+        )}
       </div>
     </div>
   );
+
+  async function update() {
+    const mom = moment(moment.now()).format("Do MMMM  YYYY,h:mm:ss a ");
+    const db = getFirestore();
+    const emailOwn = store.getState().email;
+    await updateScore();
+    setShowDotLoader(true);
+    await setDoc(
+      await doc(db, "recruiting", `${emailOwn} + ${mom}`),
+      {
+        name: fullName,
+        Date: date,
+        technology: technology,
+        visa: visa,
+        experience: exp,
+        location: location,
+        rate: rate,
+        canEmail: canEmail,
+        canPhNo: canPNo,
+        empMail: empMail,
+        empNumber: empNumber,
+        status: status,
+        SubmissionDate: Timestamp.now(),
+        submittedBy: emailOwn,
+      },
+      { merge: true }
+    )
+      .then(() => {
+        setShowDotLoader(false);
+        toast.success("form submitted", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch(() => {
+        setShowDotLoader(false);
+        toast.error("Try again or reload the page", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  }
 }

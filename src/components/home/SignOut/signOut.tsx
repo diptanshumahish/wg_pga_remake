@@ -48,7 +48,6 @@ export default function SignOutPage({ visibility }: Props) {
                   Cookies.set("isLoggedIn", "false");
                   Cookies.set("firstLogin", "");
                   store.dispatch(resetBreak());
-                  store.dispatch(resetNotes());
                 })
                 .then(() => {
                   store.dispatch(updateSignout());
