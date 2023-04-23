@@ -14,6 +14,7 @@ import TakeBreak from "./home/Break/breakPage";
 import UpdateItem from "./home/Update/updateItems";
 import SignOutPage from "./home/SignOut/signOut";
 import SendMail from "./Wrappers/sendMails";
+import NotesCompoenents from "./home/notes/notesComponent";
 //exporting the functions
 export {
   Welcome,
@@ -32,4 +33,5 @@ export {
   UpdateItem,
   SignOutPage,
   SendMail,
+  NotesCompoenents,
 };

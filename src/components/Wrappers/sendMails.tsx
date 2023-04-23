@@ -1,4 +1,4 @@
-import { sendMessage, getEmails } from "@/functions/sendgrid/sendgrid";
+import { sendMessage } from "@/functions/sendgrid/sendgrid";
 import { updateMail } from "@/state-mangement/store/slices/enableMail";
 import { store } from "@/state-mangement/store/store/store";
 import { XCircle } from "@phosphor-icons/react";
@@ -6,12 +6,17 @@ import { useState } from "react";
 import { parse } from "papaparse";
 import { spawn } from "child_process";
 import { resetHtml, setHtml } from "@/state-mangement/store/slices/storeHtml";
+import { toast } from "react-toastify";
 interface Props {
   visibility: boolean;
 }
+interface emails {
+  name: string;
+  email: string;
+}
 
 export default function SendMail({ visibility }: Props) {
-  const [emails, setEmails] = useState([]);
+  const [emails, setEmails] = useState([{ name: "", email: "" }]);
   const [subject, setSubject] = useState("");
   const [plainText, setPlainText] = useState("");
   const [htmlText, setHtmlText] = useState(store.getState().changeHtml);
@@ -86,9 +91,19 @@ export default function SendMail({ visibility }: Props) {
                       .filter((ele) => ele.type === "text/csv")
                       .forEach(async (ele) => {
                         const text = await ele.text();
-                        const res = await parse(text, { header: true });
+                        const res = await parse<emails>(text, { header: true });
                         setEmails(res.data);
                       });
+                    toast.success("Sucessfully added the CSV", {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
                   }}
                 >
                   {drop}
@@ -103,15 +118,26 @@ export default function SendMail({ visibility }: Props) {
                     accept="text/csv"
                     name="CSV"
                     onChange={(e) => {
-                      console.log("ji");
                       if (e.target.files !== null) {
                         Array.from(e.target.files)
                           .filter((ele) => ele.type === "text/csv")
                           .forEach(async (ele) => {
                             const text = await ele.text();
-                            const res = await parse(text, { header: true });
+                            const res = await parse<emails>(text, {
+                              header: true,
+                            });
                             setEmails(res.data);
                           });
+                        toast.success("Sucessfully added the CSV", {
+                          position: "top-right",
+                          autoClose: 5000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        });
                       }
                     }}
                   />
@@ -169,19 +195,51 @@ export default function SendMail({ visibility }: Props) {
             <button
               className="bg-primary p-2 rounded-sm"
               onClick={() => {
-                sendMessage({
-                  html: htmlText,
-                  subject: subject,
-                  text: "some text",
-                  to: emails,
-                });
+                if (
+                  htmlText !== "" ||
+                  subject !== "" ||
+                  emails.length !== 1 ||
+                  plainText == ""
+                ) {
+                  toast.error(
+                    "Please fill in all fields and check preview before sending",
+                    {
+                      position: "top-right",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    }
+                  );
+                } else if (emails.length === 1) {
+                  toast.error("Atleast add two emails in your csv", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  });
+                } else {
+                  sendMessage({
+                    html: htmlText,
+                    subject: subject,
+                    text: plainText,
+                    to: emails,
+                  });
+                }
               }}
             >
               Submit
             </button>
 
             {/* render output */}
-            {emails.length !== 0 && (
+            {emails.length !== 1 && (
               <div>
                 <span className="text-2xl ">Preview Reciepents</span>{" "}
                 <table className="bg-formBack rounded-md w-[100%] ">
@@ -192,7 +250,7 @@ export default function SendMail({ visibility }: Props) {
 
                   {emails.map((ele, idx) => {
                     return (
-                      <tr className="">
+                      <tr className="" key={idx}>
                         <td className="p-4 text-white">{ele.name}</td>
                         <td className="p-4 text-white">{ele.email}</td>
                       </tr>
@@ -209,8 +267,8 @@ export default function SendMail({ visibility }: Props) {
                   <div className="flex gap-4">
                     <div>To: </div>
                     <div className="flex flex-col">
-                      {emails.map((ele) => {
-                        return <span>{ele.email}</span>;
+                      {emails.map((ele, idx) => {
+                        return <span key={idx}>{ele.email}</span>;
                       })}
                     </div>
                   </div>

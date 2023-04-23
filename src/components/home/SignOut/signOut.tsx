@@ -1,5 +1,6 @@
 import { navigate } from "@/functions";
 import { updateSignout } from "@/state-mangement/store/slices/enableSignout";
+import { resetNotes } from "@/state-mangement/store/slices/notes";
 import { resetBreak } from "@/state-mangement/store/slices/subTractBreak";
 import { store } from "@/state-mangement/store/store/store";
 import { getAuth, signOut } from "firebase/auth";
@@ -47,6 +48,7 @@ export default function SignOutPage({ visibility }: Props) {
                   Cookies.set("isLoggedIn", "false");
                   Cookies.set("firstLogin", "");
                   store.dispatch(resetBreak());
+                  store.dispatch(resetNotes());
                 })
                 .then(() => {
                   store.dispatch(updateSignout());

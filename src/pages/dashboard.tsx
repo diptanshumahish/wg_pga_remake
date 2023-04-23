@@ -15,6 +15,8 @@ import { store } from "@/state-mangement/store/store/store";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { navigate } from "@/functions";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Dashboard() {
   // const uid = useRouter().query.uid;
@@ -43,6 +45,18 @@ export default function Dashboard() {
   });
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Head>
         <title>Dashboard</title>
       </Head>
@@ -54,7 +68,7 @@ export default function Dashboard() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -10, opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className=" p-8 gap-5 flex min-w-screen min-h-screen overflow-hidden"
+          className=" p-8 gap-5 flex min-w-screen min-h-screen max-h-screen overflow-hidden"
           style={{
             backgroundImage: "url(/images/dash.jpg)",
             backgroundSize: "cover",

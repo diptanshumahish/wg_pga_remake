@@ -24,10 +24,11 @@ export default function Login() {
   const [userPass, setUserPass] = useState("");
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (isLoggedIn() && !newDay()) {
+    const day = newDay();
+    if (isLoggedIn() && !day) {
       navigate({ navigateTo: `/dashboard?uid=${uid}`, replace: true });
     }
-  }, [isLoggedIn(), newDay()]);
+  }, [isLoggedIn(), newDay(), uid]);
 
   return (
     <div

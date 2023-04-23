@@ -1,4 +1,5 @@
 import Image from "next/image";
+import NotesCompoenents from "../notes/notesComponent";
 
 export default function NotesAndLogo() {
   return (
@@ -12,10 +13,7 @@ export default function NotesAndLogo() {
       }}
     >
       {/* notes */}
-      <div>
-
-        
-      </div>
+      <NotesCompoenents/>
       <div>
         <Image src="/assets/load.png" height={200} width={300} alt="MainLogo" />
       </div>
