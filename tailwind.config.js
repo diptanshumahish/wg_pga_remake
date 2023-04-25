@@ -20,7 +20,9 @@ module.exports = {
       'formBack':'#2b2e3257',
       'violet':'#2e1065',
       'red':'#b91c1c',
-      'white':"#ffffff"
+      'white':"#ffffff",
+      'inputBack':'#ffffff22',
+      'unselectedText':'#ffffff99'
       
     },
     fontFamily:{

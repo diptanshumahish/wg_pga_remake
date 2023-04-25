@@ -74,81 +74,87 @@ export default function Login() {
         onActionChange={() => {
           signInWithEmailAndPassword(getAuth(), userEmail, userPass)
             .then((value) => {
-              // second time login
-              if (Cookies.get("updateDate") === "updated") {
-                Cookies.set(
-                  "updateDate",
-                  moment(moment.now()).format("DD/MMMM/YYYY")
-                );
-                toast.warn(
-                  "You are logging in the second time today, previous data loss might occur",
-                  {
-                    position: "top-right",
-                    autoClose: 9000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                  }
-                );
-              }
+              if (value.user.email !== "warriors.com") {
+                // second time login
+                if (Cookies.get("updateDate") === "updated") {
+                  Cookies.set(
+                    "updateDate",
+                    moment(moment.now()).format("DD/MMMM/YYYY")
+                  );
+                  toast.warn(
+                    "You are logging in the second time today, previous data loss might occur",
+                    {
+                      position: "top-right",
+                      autoClose: 9000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    }
+                  );
+                }
 
-              // set a default full name
-              if (value.user.displayName === null) {
-                store.dispatch(updateState("Unset"));
+                // set a default full name
+                if (value.user.displayName === null) {
+                  store.dispatch(updateState("Unset"));
+                } else {
+                  store.dispatch(updateState(value.user.displayName));
+                }
+                // set a default profile picture
+                if (value.user.photoURL === null) {
+                  store.dispatch(
+                    updateProfilePic(
+                      "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg"
+                    )
+                  );
+                } else {
+                  store.dispatch(updateProfilePic(value.user.photoURL));
+                }
+                // set uid
+                store.dispatch(updateUid(value.user.uid));
+
+                // different user
+                if (store.getState().email !== value.user.email) {
+                  Cookie.set(
+                    "firstLogin",
+                    moment(moment.now()).format("HH:mm:ss")
+                  );
+                  store.dispatch(updateEmail(value.user.email));
+                }
+                // login cookie
+                Cookie.set("isLoggedIn", "true");
+                // new day
+                if (newDay()) {
+                  Cookie.set(
+                    "loginDateChecker",
+                    moment(moment.now()).format("DD")
+                  );
+                  Cookie.set(
+                    "firstLogin",
+                    moment(moment.now()).format("HH:mm:ss")
+                  );
+                  Cookies.set(
+                    "updateDate",
+                    moment(moment.now()).format("DD/MMMM/YYYY")
+                  );
+                  store.dispatch(resetTime());
+                }
+                // in case of multiple accounts
+
+                if (Cookie.get("firstLogin") === "") {
+                  Cookie.set(
+                    "firstLogin",
+                    moment(moment.now()).format("HH:mm:ss")
+                  );
+                }
+                store.dispatch(goFront());
               } else {
-                store.dispatch(updateState(value.user.displayName));
+                navigate({
+                  navigateTo: `/adminDashboard?uid=${value.user.uid}`,
+                });
               }
-              // set a default profile picture
-              if (value.user.photoURL === null) {
-                store.dispatch(
-                  updateProfilePic(
-                    "https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg"
-                  )
-                );
-              } else {
-                store.dispatch(updateProfilePic(value.user.photoURL));
-              }
-              // set uid
-              store.dispatch(updateUid(value.user.uid));
-
-              // different user
-              if (store.getState().email !== value.user.email) {
-                Cookie.set(
-                  "firstLogin",
-                  moment(moment.now()).format("HH:mm:ss")
-                );
-                store.dispatch(updateEmail(value.user.email));
-              }
-              // login cookie
-              Cookie.set("isLoggedIn", "true");
-              // new day
-              if (newDay()) {
-                Cookie.set(
-                  "loginDateChecker",
-                  moment(moment.now()).format("DD")
-                );
-                Cookie.set(
-                  "firstLogin",
-                  moment(moment.now()).format("HH:mm:ss")
-                );
-                Cookies.set(
-                  "updateDate",
-                  moment(moment.now()).format("DD/MMMM/YYYY")
-                );
-                store.dispatch(resetTime());
-              }
-              // in case of multiple accounts
-
-              if (Cookie.get("firstLogin") === "") {
-                Cookie.set(
-                  "firstLogin",
-                  moment(moment.now()).format("HH:mm:ss")
-                );
-              }
-              store.dispatch(goFront());
             })
             .catch((e) => {
               setShow(true);

@@ -15,6 +15,9 @@ import UpdateItem from "./home/Update/updateItems";
 import SignOutPage from "./home/SignOut/signOut";
 import SendMail from "./Wrappers/sendMails";
 import NotesCompoenents from "./home/notes/notesComponent";
+import AddUser from "./Admin/addUser";
+import ProductionHours from "./Admin/productionHours";
+import Forms from "./Admin/Forms";
 //exporting the functions
 export {
   Welcome,
@@ -34,4 +37,7 @@ export {
   SignOutPage,
   SendMail,
   NotesCompoenents,
+  AddUser,
+  ProductionHours,
+  Forms
 };

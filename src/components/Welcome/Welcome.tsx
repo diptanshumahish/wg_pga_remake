@@ -28,9 +28,6 @@ export default function Welcome() {
         }
       );
     }
-    if (newDay()) {
-      Cookies.set("updateDate", moment(moment.now()).format("DD/MMMM/YYYY"));
-    }
     if (
       newDay() &&
       Cookies.get("updateDate") !== "updated" &&
@@ -44,6 +41,7 @@ export default function Welcome() {
         },
         { merge: true }
       ).then(() => {
+        Cookies.set("updateDate", moment(moment.now()).format("DD/MMMM/YYYY"));
         toast.success(
           "We have sucessfully updated last your last day work hours",
           {

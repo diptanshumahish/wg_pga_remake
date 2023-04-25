@@ -88,11 +88,11 @@ export default function ApplyLeave({ visibility }: Props) {
               required
             />
           </label>
-          {/* <input
+          <input
             type="hidden"
             name="_next"
-            value="https://wg-pwa.vercel.app/"
-          ></input> */}
+            value="https://wgpwaremake.vercel.app/dashboard"
+          ></input>
           <input type="hidden" name="_captcha" value="false"></input>
           <input type="hidden" name="_template" value="table"></input>
           <input
