@@ -195,26 +195,7 @@ export default function SendMail({ visibility }: Props) {
             <button
               className="bg-primary p-2 rounded-sm"
               onClick={() => {
-                if (
-                  htmlText !== "" ||
-                  subject !== "" ||
-                  emails.length !== 1 ||
-                  plainText == ""
-                ) {
-                  toast.error(
-                    "Please fill in all fields and check preview before sending",
-                    {
-                      position: "top-right",
-                      autoClose: 5000,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                      progress: undefined,
-                      theme: "dark",
-                    }
-                  );
-                } else if (emails.length === 1) {
+                if (emails.length === 1) {
                   toast.error("Atleast add two emails in your csv", {
                     position: "top-right",
                     autoClose: 5000,

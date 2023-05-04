@@ -12,25 +12,27 @@ interface Message {
   html: string;
 }
 const API_KEY =
-  "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";
+  "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";
+// "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";
 
-function sendMessage({ to, from, html, subject, text }: Message) {
+async function sendMessage({ to, from, html, subject, text }: Message) {
+  await sgMail.setApiKey(API_KEY);
   const emails = to;
   emails.forEach(async (ele) => {
     if (ele.name !== "" || ele.email !== "") {
       const message = {
         to: ele.email,
-        from: "diptanshu.mahish.21@aot.edu.in",
+        from: "rudra@warriorsgrp.com",
         subject: subject,
         text: text,
         html: `<h4>Hi ${ele.name},</h4> <br>${html}`,
       };
-      sgMail.setApiKey(API_KEY);
+
       try {
         await sgMail.send(message);
         store.dispatch(resetHtml());
         store.dispatch(updateMail());
-        toast.success("Mails have been sent sucessfully", {
+        toast.success(`Mail has been sucessfuly sent to ${ele.email}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
