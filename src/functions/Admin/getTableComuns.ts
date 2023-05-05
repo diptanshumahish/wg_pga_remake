@@ -2,7 +2,7 @@ const ele = [
   [
     {
       name: "Submitted by",
-      selector: (row) => row.submittedBy,
+      selector: "submittedBy",
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
         color: "white",
@@ -10,98 +10,89 @@ const ele = [
     },
     {
       name: "Date",
-      selector: (row) => row.Date,
+      selector: "Date",
     },
     {
       name: "Name",
-      selector: (row) => row.Name,
+      selector: "Name",
     },
     {
       name: "Technology",
-      selector: (row) => row.Technology,
+      selector: "Technology",
       grow: 2,
     },
     {
       name: "Visa",
-      selector: (row) => row.Visa,
+      selector: "Visa",
     },
     {
       name: "Experience",
-      selector: (row) => row.Experience,
+      selector: "Experience",
     },
     {
       name: "w2",
-      selector: (row) => row.W2,
+      selector: "W2",
     },
     {
       name: "Location",
-      selector: (row) => row.Loc,
+      selector: "Loc",
     },
     {
       name: "1/2 Job",
-      selector: (row) => row.oneTwoJob,
+      selector: "oneTwoJob",
     },
     {
       name: "Onsite",
-      selector: (row) => row.Onsite,
+      selector: "Onsite",
     },
     {
       name: "Rate",
-      selector: (row) => row.Rate,
+      selector: "Rate",
     },
     {
       name: "Email",
-      selector: (row) => row.Email,
+      selector: "Email",
       grow: 2,
     },
     {
       name: "Mob Number",
-      selector: (row) => row.MobileNumber,
+      selector: "MobileNumber",
     },
     {
       name: "SSN",
-      selector: (row) => row.SSN,
+      selector: "SSN",
     },
     {
       name: "LinkedIn",
-      selector: (row) => row.LinkedIn,
+      selector: "LinkedIn",
       grow: 2,
     },
     {
       name: "Payment Mode",
-      selector: (row) => row.PaymentMode,
+      selector: "PaymentMode",
     },
     {
       name: "US Entry year",
-      selector: (row) => row.Us,
+      selector: "Us",
     },
     {
       name: "Availability",
-      selector: (row) => row.Availability,
+      selector: "Availability",
     },
     {
       name: "Support",
-      selector: (row) => row.Support,
+      selector: "Support",
     },
     {
       name: "Comments",
-      selector: (row) => row.Comments,
+      selector: "Comments",
       grow: 2,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
     },
   ],
   [
     {
       name: "Submitted By",
-      selector: (row) => row.submittedBy,
+      selector: "submittedBy",
       grow: 2,
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
@@ -111,43 +102,34 @@ const ele = [
     },
     {
       name: "Name",
-      selector: (row) => row.Name,
+      selector: "Name",
     },
     {
       name: "Email",
-      selector: (row) => row.Email,
+      selector: "Email",
     },
     {
       name: "Organization",
-      selector: (row) => row.Organization,
+      selector: "Organization",
     },
 
     {
       name: "Mobile Number",
-      selector: (row) => row.MobileNumber,
+      selector: "MobileNumber",
     },
     {
       name: "Recruiter",
-      selector: (row) => row.Recruiter,
+      selector: "Recruiter",
     },
     {
       name: "Comments",
-      selector: (row) => row.Comments,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
+      selector: "Comments",
     },
   ],
   [
     {
       name: "Submitted by",
-      selector: (row) => row.submittedBy,
+      selector: "submittedBy",
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
         color: "white",
@@ -155,26 +137,17 @@ const ele = [
     },
     {
       name: "Name",
-      selector: (row) => row.Name,
+      selector: "Name",
     },
     {
       name: "Feedback",
-      selector: (row) => row.Feedback,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
+      selector: "Feedback",
     },
   ],
   [
     {
       name: "Submitted by",
-      selector: (row) => row.SubmittedBy,
+      selector: "SubmittedBy",
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
         color: "white",
@@ -182,51 +155,42 @@ const ele = [
     },
     {
       name: "Date",
-      selector: (row) => row.Date,
+      selector: "Date",
     },
     {
       name: "Candidate Name",
-      selector: (row) => row.CandidateName,
+      selector: "CandidateName",
     },
     {
       name: "Technology",
-      selector: (row) => row.Technology,
+      selector: "Technology",
     },
 
     {
       name: "Timing",
-      selector: (row) => row.Timing,
+      selector: "Timing",
     },
     {
       name: "Round",
-      selector: (row) => row.Round,
+      selector: "Round",
     },
     {
       name: "CallDuration",
-      selector: (row) => row.CallDuration,
+      selector: "CallDuration",
     },
     {
       name: "Feedback",
-      selector: (row) => row.Feedback,
+      selector: "Feedback",
     },
     {
       name: "Support",
-      selector: (row) => row.Support,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
+      selector: "Support",
     },
   ],
   [
     {
       name: "Submitted by",
-      selector: (row) => row.SubmittedBy,
+      selector: "SubmittedBy",
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
         color: "white",
@@ -234,67 +198,58 @@ const ele = [
     },
     {
       name: "name",
-      selector: (row) => row.name,
+      selector: "name",
     },
     {
       name: "Date",
-      selector: (row) => row.Date,
+      selector: "Date",
     },
     {
       name: "technology",
-      selector: (row) => row.technology,
+      selector: "technology",
     },
     {
       name: "visa",
-      selector: (row) => row.visa,
+      selector: "visa",
     },
 
     {
       name: "experience",
-      selector: (row) => row.experience,
+      selector: "experience",
     },
     {
       name: "location",
-      selector: (row) => row.location,
+      selector: "location",
     },
     {
       name: "rate",
-      selector: (row) => row.rate,
+      selector: "rate",
     },
     {
       name: "canEmail",
-      selector: (row) => row.canEmail,
+      selector: "canEmail",
     },
     {
       name: "canPhNo",
-      selector: (row) => row.canPhNo,
+      selector: "canPhNo",
     },
     {
       name: "empMail",
-      selector: (row) => row.empMail,
+      selector: "empMail",
     },
     {
       name: "empNumber",
-      selector: (row) => row.empNumber,
+      selector: "empNumber",
     },
     {
       name: "status",
-      selector: (row) => row.status,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
+      selector: "status",
     },
   ],
   [
     {
       name: "Submitted by",
-      selector: (row) => row.submittedBy,
+      selector: "submittedBy",
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
         color: "white",
@@ -302,60 +257,50 @@ const ele = [
     },
     {
       name: "Name",
-      selector: (row) => row.Name,
+      selector: "Name",
     },
     {
       name: "Rate",
-      selector: (row) => row.Rate,
+      selector: "Rate",
     },
     {
       name: "Date",
-      selector: (row) => row.Date,
+      selector: "Date",
     },
     {
       name: "E mail",
-      selector: (row) => row.Email,
+      selector: "Email",
       grow: 3,
     },
     {
       name: "Organization",
-      selector: (row) => row.Organization,
+      selector: "Organization",
       grow: 2,
     },
     {
       name: "Mobile Number",
-      selector: (row) => row.MobileNumber,
+      selector: "MobileNumber",
       grow: 2,
     },
     {
       name: "Candidate",
-      selector: (row) => row.Candidate,
+      selector: "Candidate",
       grow: 2,
     },
     {
       name: "End Client",
-      selector: (row) => row.EndClient,
+      selector: "EndClient",
       grow: 2,
     },
     {
       name: "Feedback",
-      selector: (row) => row.Feedback,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-      grow: 2,
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
+      selector: "Feedback",
     },
   ],
   [
     {
       name: "Submitted by",
-      selector: (row) => row.submittedBy,
+      selector: "submittedBy",
       style: {
         backgroundColor: "rgba(63, 195, 128, 0.9)",
         color: "white",
@@ -363,63 +308,53 @@ const ele = [
     },
     {
       name: "Name",
-      selector: (row) => row.name,
+      selector: "name",
     },
 
     {
       name: "Date",
-      selector: (row) => row.Date,
+      selector: "Date",
     },
     {
       name: "technology",
-      selector: (row) => row.technology,
+      selector: "technology",
       grow: 3,
     },
     {
       name: "visa",
-      selector: (row) => row.visa,
+      selector: "visa",
       grow: 2,
     },
     {
       name: "relocation",
-      selector: (row) => row.relocation,
+      selector: "relocation",
       grow: 2,
     },
     {
       name: "expected rate",
-      selector: (row) => row.expectedRate,
+      selector: "expectedRate",
       grow: 2,
     },
     {
       name: "client rate",
-      selector: (row) => row.clientRate,
+      selector: "clientRate",
       grow: 2,
     },
     {
       name: "recruiter mail",
-      selector: (row) => row.recruiterMail,
+      selector: "recruiterMail",
     },
     {
       name: "recruiter Number",
-      selector: (row) => row.recruiterNumber,
+      selector: "recruiterNumber",
     },
     {
       name: "required ID",
-      selector: (row) => row.requiredId,
+      selector: "requiredId",
     },
     {
       name: "recruiter name",
-      selector: (row) => row.recruiterName,
-    },
-    {
-      name: "Submission date",
-      selector: (row) => row.SubmissionDate.toDate().toDateString(),
-      grow: 2,
-    },
-    {
-      name: "Submission Time",
-      selector: (row) =>
-        `${row.SubmissionDate.toDate().getHours()}:${row.SubmissionDate.toDate().getMinutes()} hrs`,
+      selector: "recruiterName",
     },
   ],
 ];

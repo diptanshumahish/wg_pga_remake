@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/functions/Admin/getTableComuns.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/functions/Admin/getTableComuns.ts", "src/functions/Admin/getProdHourColumns.ts"],
   "exclude": ["node_modules"]
 }

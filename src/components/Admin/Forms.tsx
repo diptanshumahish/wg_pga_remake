@@ -24,8 +24,9 @@ export default function Forms() {
     "missingRate",
   ];
   const [activeIndex, setActiveIndex] = useState(0);
-  const initData: DocumentData = [];
+  const initData: any[] = [];
   const [dataArray, setDataArray] = useState(initData);
+  const [columnsData, setColumnsData] = useState(initData);
   useEffect(() => {
     setDataArray([]);
   }, []);
@@ -65,6 +66,7 @@ export default function Forms() {
                 getFormdata(dbReq[idx]).then((value) => {
                   setDataArray(value);
                 });
+                setColumnsData(getTableColumns(idx));
               }}
             >
               {ele}
@@ -78,11 +80,7 @@ export default function Forms() {
           <div>Loading</div>
         </div>
       ) : (
-        <DataTable
-          columns={getTableColumns(activeIndex)}
-          data={dataArray}
-          pagination
-        />
+        <DataTable columns={columnsData} data={dataArray} pagination />
       )}
     </div>
   );

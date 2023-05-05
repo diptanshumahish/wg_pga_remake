@@ -1,6 +1,5 @@
 import { getParticularEmployeeData } from "@/functions/Admin/getParticularEmployeeData";
-import { Divide } from "@phosphor-icons/react";
-import { DocumentData } from "firebase/firestore";
+import getHourColumns from "@/functions/Admin/getProdHourColumns";
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 
@@ -8,7 +7,8 @@ export default function EmployeeProductionHours() {
   const [selectedMonth, setSelectedMonth] = useState("Select Month");
   const [empEmail, setEmpEmail] = useState("set Email");
   const [showData, setShowData] = useState(false);
-  var initData: DocumentData = [];
+  const [prodColumns, setProdColumns] = useState(initData);
+  var initData: any = [];
   const [tableData, setTableData] = useState(initData);
   return (
     <div
@@ -119,29 +119,17 @@ export default function EmployeeProductionHours() {
                 setShowData(true);
                 getParticularEmployeeData(empEmail, selectedMonth).then(
                   (value) => {
-                    setTableData(value);
+                    setTableData(value!);
                   }
                 );
+
+                setProdColumns(getHourColumns());
               }}
             >
               Update
             </button>
             <DataTable
-              columns={[
-                {
-                  name: "date",
-                  selector: (row) => row.date,
-                  style: {
-                    backgroundColor: "rgba(63, 195, 128, 0.9)",
-                    color: "white",
-                  },
-                  sortable: true,
-                },
-                {
-                  name: "Hours",
-                  selector: (row) => row.value,
-                },
-              ]}
+              columns={[]}
               data={tableData}
               pagination
               className="rounded-md"
