@@ -33,7 +33,11 @@ export default function ApplyLeave({ visibility }: Props) {
             }}
           />
         </div>
-        <form className="flex  flex-col p-4 gap-3" action="" method="post">
+        <form
+          className="flex  flex-col p-4 gap-3"
+          action="https://formsubmit.co/your@email.com"
+          method="post"
+        >
           <label htmlFor="Name">
             <div className="leaveSub">Enter your name</div>
             <input
