@@ -1,5 +1,4 @@
 import { getParticularEmployeeData } from "@/functions/Admin/getParticularEmployeeData";
-import getHourColumns from "@/functions/Admin/getProdHourColumns";
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 
@@ -119,21 +118,39 @@ export default function EmployeeProductionHours() {
                 setShowData(true);
                 getParticularEmployeeData(empEmail, selectedMonth).then(
                   (value) => {
-                    setTableData(value!);
+                    setTableData(value);
                   }
                 );
-
-                setProdColumns(getHourColumns());
               }}
             >
               Update
             </button>
-            <DataTable
-              columns={[]}
-              data={tableData}
-              pagination
-              className="rounded-md"
-            />
+
+            <div className="flex flex-wrap gap-4">
+              {tableData.map(
+                (
+                  ele: {
+                    id: number;
+                    date: number;
+                    value: string;
+                    month: string;
+                  },
+                  idx: number
+                ) => {
+                  return (
+                    <div className="flex flex-col items-center justify-center bg-white  rounded-md overflow-hidden">
+                      <span className="bg-red w-[100%] py-2 px-5 flex items-center justify-center font-bold text-xl">
+                        {ele.date}
+                      </span>
+                      <span className="text-2xl text-slate-950 py-2 px-5 font-bold flex flex-col justify-center items-center">
+                        <span>{ele.value}</span>
+                        <span className="font-normal text-xs">HOURS</span>
+                      </span>
+                    </div>
+                  );
+                }
+              )}
+            </div>
           </>
         ) : (
           <button
