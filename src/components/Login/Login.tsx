@@ -24,15 +24,16 @@ export default function Login() {
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [show, setShow] = useState(false);
+  const day = newDay();
+  const log = isLoggedIn();
   useEffect(() => {
-    const day = newDay();
-    if (isLoggedIn() && !day) {
+    if (log && !day) {
       navigate({ navigateTo: `/dashboard?uid=${uid}`, replace: true });
     }
     if (getOS() !== "Windows") {
       navigate({ navigateTo: "/error", replace: true });
     }
-  }, [isLoggedIn(), newDay(), uid]);
+  }, [log, day, uid]);
 
   return (
     <div

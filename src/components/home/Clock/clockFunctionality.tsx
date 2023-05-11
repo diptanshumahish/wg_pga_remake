@@ -12,13 +12,6 @@ export default function ClockFunctionality() {
     setDur(store.getState().countTime);
   });
 
-  useEffect(() => {
-    timer;
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
   const timer = setInterval(() => {
     var now: string = moment(moment.now()).format("HH:mm:ss");
     const temp: string | undefined = Cookie.get("firstLogin");
@@ -28,6 +21,13 @@ export default function ClockFunctionality() {
       .format("HH:mm");
     store.dispatch(updateTime(duration));
   }, 1000);
+
+  useEffect(() => {
+    timer;
+    return () => {
+      clearInterval(timer);
+    };
+  }, [timer]);
 
   return (
     <div

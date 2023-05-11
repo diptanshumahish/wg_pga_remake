@@ -71,6 +71,7 @@ export default function WholeEmployeeProductionHours() {
       ) : (
         <div>
           <button
+            className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
             onClick={() => {
               getWorkHours().then((value) => {
                 setEmailData(value.emails);

@@ -1,20 +1,26 @@
-import { getParticularEmployeeData } from "@/functions/Admin/getParticularEmployeeData";
-import { useState } from "react";
-import DataTable from "react-data-table-component";
+import { getParticularEmployeeScore } from "@/functions/Admin/getScoreEmp";
+import React, { useState } from "react";
+import { DotLoader } from "react-spinners";
 
-export default function EmployeeProductionHours() {
+export default function ProdScoreEmp() {
+  const [showData, setShowData] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState("Select Month");
   const [empEmail, setEmpEmail] = useState("set Email");
-  const [showData, setShowData] = useState(false);
-  const [prodColumns, setProdColumns] = useState(initData);
-  var initData: any = [];
-  const [tableData, setTableData] = useState(initData);
+  const init: {
+    id: number;
+    date: number;
+    value: string;
+    month: string;
+  }[] = [];
+  const [dataArray, setDataArray] = useState(init);
   return (
     <div
       className="p-8 bg-formBack rounded-md shadow-sm flex flex-col gap-4 w-[100%]"
       style={{ backdropFilter: "blur(5px)" }}
     >
-      <div className="text-2xl font-bold">Employee Production Hours</div>
+      <div className="text-2xl font-bold">
+        Productivity Score of Particular Employee{" "}
+      </div>
       <div className="flex justify-between">
         <span className="text-2xl font-bold">{selectedMonth}</span>
         <div className="flex items-center gap-4 w-[30%]">
@@ -111,64 +117,57 @@ export default function EmployeeProductionHours() {
       </div>
       <div>
         {showData ? (
-          <>
+          <div>
             <button
               className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
               onClick={() => {
-                setShowData(true);
-                getParticularEmployeeData(empEmail, selectedMonth).then(
-                  (value) => {
-                    setTableData(value);
+                setShowData(false);
+                getParticularEmployeeScore(empEmail, selectedMonth).then(
+                  (val) => {
+                    setShowData(true);
+                    setDataArray(val!);
                   }
                 );
               }}
             >
               Update
             </button>
-
-            <div className="flex flex-wrap gap-4">
-              {tableData.map(
-                (
-                  ele: {
-                    id: number;
-                    date: number;
-                    value: string;
-                    month: string;
-                  },
-                  idx: number
-                ) => {
-                  return (
-                    <div
-                      className="flex flex-col items-center justify-center bg-white  rounded-md overflow-hidden"
-                      key={idx}
-                    >
-                      <span className="bg-red w-[100%] py-2 px-5 flex items-center justify-center font-bold text-xl">
-                        {ele.date}
-                      </span>
-                      <span className="text-2xl text-slate-950 py-2 px-5 font-bold flex flex-col justify-center items-center">
-                        <span>{ele.value}</span>
-                        <span className="font-normal text-xs">HOURS</span>
-                      </span>
-                    </div>
-                  );
-                }
-              )}
+            <div className="flex flex-wrap gap-4 py-5">
+              {dataArray.map((ele, idx) => {
+                return (
+                  <div
+                    className="flex flex-col items-center justify-center bg-white  rounded-md overflow-hidden"
+                    key={idx}
+                  >
+                    <span className="bg-red w-[100%] py-2 px-5 flex items-center justify-center font-bold text-xl">
+                      {ele.date}
+                    </span>
+                    <span className="text-2xl text-slate-950 py-2 px-5 font-bold flex flex-col justify-center items-center">
+                      <span>{ele.value}</span>
+                      <span className="font-normal text-xs">POINTS</span>
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-          </>
+          </div>
         ) : (
-          <button
-            className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
-            onClick={() => {
-              setShowData(true);
-              getParticularEmployeeData(empEmail, selectedMonth).then(
-                (value) => {
-                  setTableData(value);
-                }
-              );
-            }}
-          >
-            Show Data
-          </button>
+          <div>
+            <button
+              className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
+              onClick={() => {
+                setShowData(true);
+                getParticularEmployeeScore(empEmail, selectedMonth).then(
+                  (val) => {
+                    setDataArray(val!);
+                  }
+                );
+              }}
+            >
+              Show Data
+            </button>
+            <DotLoader color="white" />
+          </div>
         )}
       </div>
     </div>

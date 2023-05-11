@@ -122,7 +122,7 @@ export default function NavigationPane() {
           </div>
         </div>
       </div>
-      <span className="text-xs text-white">version 4.1.0 beta</span>
+      <span className="text-xs text-white">version 4.2.0 stable</span>
     </div>
   );
 }

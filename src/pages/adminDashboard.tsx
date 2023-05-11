@@ -6,6 +6,7 @@ import { ProductionHours } from "@/components";
 import EmployeeProductionHours from "@/components/Admin/productionHours";
 import WholeEmployeeProductionHours from "@/components/Admin/wholeProdHours";
 import ProductivityScore from "@/components/Admin/producitvityscore";
+import ProdScoreEmp from "@/components/Admin/prodScoreEmp";
 
 export default function AdminDashboard() {
   return (
@@ -36,13 +37,14 @@ export default function AdminDashboard() {
       >
         <div className="w-[100%] text-white  ">
           <div className="text-3xl font-bold mb-4">Admin Dashboard</div>
-          <span>Version 4.1.0 beta</span>
+          <span>Version 4.2.0 stable</span>
           <div className="w-[100%] flex flex-col gap-4">
             <AddUser />
             <Forms />
             <EmployeeProductionHours />
             <WholeEmployeeProductionHours />
             <ProductivityScore />
+            <ProdScoreEmp />
           </div>
         </div>
       </main>

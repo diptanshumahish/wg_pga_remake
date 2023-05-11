@@ -57,7 +57,7 @@ export default function Welcome() {
         );
       });
     }
-  }, []);
+  }, [db, em]);
   return (
     <div
       className="flex flex-col justify-center items-center bg-white bg-opacity-10 p-10 rounded-md shadow-md gap-4"

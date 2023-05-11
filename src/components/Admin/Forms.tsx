@@ -3,6 +3,7 @@ import { getFormdata, getTableColumns } from "@/functions";
 import DataTable from "react-data-table-component";
 import { DocumentData } from "firebase/firestore";
 import { DotLoader } from "react-spinners";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export default function Forms() {
   const forms = [
@@ -74,6 +75,13 @@ export default function Forms() {
           );
         })}
       </div>
+      <CSVLink
+        className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
+        data={dataArray}
+        filename={`${forms[activeIndex]}_${Date.now()}`}
+      >
+        Download CSV
+      </CSVLink>
       {dataArray.length === 0 ? (
         <div className="w-[100%] flex flex-col justify-center items-center p-8">
           <DotLoader color="white" />
