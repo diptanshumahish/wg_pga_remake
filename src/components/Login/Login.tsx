@@ -120,25 +120,29 @@ export default function Login() {
                 if (store.getState().email !== value.user.email) {
                   Cookie.set(
                     "firstLogin",
-                    moment(moment.now()).format("HH:mm:ss")
+                    moment(moment.now()).format("HH:mm:ss"),
+                    { expires: 7 }
                   );
                   store.dispatch(updateEmail(value.user.email));
                 }
                 // login cookie
-                Cookie.set("isLoggedIn", "true");
+                Cookie.set("isLoggedIn", "true", { expires: 7 });
                 // new day
                 if (newDay()) {
                   Cookie.set(
                     "loginDateChecker",
-                    moment(moment.now()).format("DD")
+                    moment(moment.now()).format("DD"),
+                    { expires: 7 }
                   );
                   Cookie.set(
                     "firstLogin",
-                    moment(moment.now()).format("HH:mm:ss")
+                    moment(moment.now()).format("HH:mm:ss"),
+                    { expires: 7 }
                   );
                   Cookies.set(
                     "updateDate",
-                    moment(moment.now()).format("DD/MMMM/YYYY")
+                    moment(moment.now()).format("DD/MMMM/YYYY"),
+                    { expires: 7 }
                   );
                   store.dispatch(resetTime());
                 }
@@ -147,7 +151,8 @@ export default function Login() {
                 if (Cookie.get("firstLogin") === "") {
                   Cookie.set(
                     "firstLogin",
-                    moment(moment.now()).format("HH:mm:ss")
+                    moment(moment.now()).format("HH:mm:ss"),
+                    { expires: 7 }
                   );
                 }
                 store.dispatch(goFront());
