@@ -30,7 +30,7 @@ export default function Login() {
     if (log && !day) {
       navigate({ navigateTo: `/dashboard?uid=${uid}`, replace: true });
     }
-    if (getOS() !== "Windows") {
+    if (getOS() !== "Windows" && getOS() !== "Linux") {
       navigate({ navigateTo: "/error", replace: true });
     }
   }, [log, day, uid]);
