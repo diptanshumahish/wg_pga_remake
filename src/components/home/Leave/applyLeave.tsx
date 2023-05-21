@@ -35,7 +35,7 @@ export default function ApplyLeave({ visibility }: Props) {
         </div>
         <form
           className="flex  flex-col p-4 gap-3"
-          action="https://formsubmit.co/your@email.com"
+          action="https://formsubmit.co/rudra@warriorsgrp.com"
           method="post"
         >
           <label htmlFor="Name">
