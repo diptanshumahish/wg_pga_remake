@@ -39,7 +39,7 @@ export default function SendMail({ visibility }: Props) {
         backdropFilter: "blur(5px)",
       }}
     >
-      {userEmail === "sam@gmail.com" ? (
+      {userEmail === "diptanshumahish2019@gmail.com" ? (
         <div
           className="bg-slate-900 rounded-md shadow-lg p-8  text-white "
           id="scroll"
