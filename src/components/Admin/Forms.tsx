@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { getFormdata, getTableColumns } from "@/functions";
-import DataTable from "react-data-table-component";
-import { DocumentData } from "firebase/firestore";
 import { DotLoader } from "react-spinners";
 import { CSVLink, CSVDownload } from "react-csv";
+import { DatTable } from "../components/ui/DatTable";
 
 export default function Forms() {
   const forms = [
@@ -88,7 +87,8 @@ export default function Forms() {
           <div>Loading</div>
         </div>
       ) : (
-        <DataTable columns={columnsData} data={dataArray} pagination />
+        // <DataTable columns={columnsData} data={dataArray} pagination  />
+        <DatTable columns={columnsData} data={dataArray} />
       )}
     </div>
   );

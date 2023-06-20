@@ -2,13 +2,22 @@ import Head from "next/head";
 import { AddUser, Forms } from "@/components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ProductionHours } from "@/components";
 import EmployeeProductionHours from "@/components/Admin/productionHours";
 import WholeEmployeeProductionHours from "@/components/Admin/wholeProdHours";
 import ProductivityScore from "@/components/Admin/producitvityscore";
 import ProdScoreEmp from "@/components/Admin/prodScoreEmp";
+import { getAuth } from "firebase/auth";
+import { navigate } from "@/functions";
+import { useEffect } from "react";
 
 export default function AdminDashboard() {
+  const auth = getAuth();
+  useEffect(() => {
+    if (auth.currentUser?.uid !== "KmQvoef8iLN6bzBjwsKR3YWyDq53") {
+      navigate({ navigateTo: "/", replace: true });
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -36,7 +45,18 @@ export default function AdminDashboard() {
         }}
       >
         <div className="w-[100%] text-white  ">
-          <div className="text-3xl font-bold mb-4">Admin Dashboard</div>
+          <div className="flex justify-between">
+            <div className="text-3xl font-bold mb-4 ">Admin Dashboard</div>
+            <button
+              onClick={() => {
+                auth.signOut().then(() => {
+                  navigate({ navigateTo: "/", replace: true });
+                });
+              }}
+            >
+              Sign out
+            </button>
+          </div>
           <span>Version 4.2.2 </span>
           <div className="w-[100%] flex flex-col gap-4">
             <AddUser />

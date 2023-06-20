@@ -21,6 +21,6 @@ export async function getFormdata(form: string) {
       element["id"] = index + 1;
     });
   });
-  
+
   return temp;
 }

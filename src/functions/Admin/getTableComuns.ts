@@ -1,360 +1,320 @@
 const ele = [
   [
     {
-      name: "Submitted by",
-      selector: "submittedBy",
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-      },
+      accessorKey: "submittedBy",
+      header: "Submitted by",
     },
     {
-      name: "Date",
-      selector: "Date",
+      accessorKey: "Date",
+      header: "Date",
     },
     {
-      name: "Name",
-      selector: "Name",
+      accessorKey: "Name",
+      header: "Name",
     },
     {
-      name: "Technology",
-      selector: "Technology",
-      grow: 2,
+      accessorKey: "Technology",
+      header: "Technology",
     },
     {
-      name: "Visa",
-      selector: "Visa",
+      accessorKey: "Visa",
+      header: "Visa",
     },
     {
-      name: "Experience",
-      selector: "Experience",
+      accessorKey: "Experience",
+      header: "Experience",
     },
     {
-      name: "w2",
-      selector: "W2",
+      accessorKey: "W2",
+      header: "W2",
     },
     {
-      name: "Location",
-      selector: "Loc",
+      accessorKey: "Loc",
+      header: "Location",
     },
     {
-      name: "1/2 Job",
-      selector: "oneTwoJob",
+      accessorKey: "oneTwoJob",
+      header: "1/2 Job",
     },
     {
-      name: "Onsite",
-      selector: "Onsite",
+      accessorKey: "Onsite",
+      header: "Onsite",
     },
     {
-      name: "Rate",
-      selector: "Rate",
+      accessorKey: "Rate",
+      header: "Rate",
     },
     {
-      name: "Email",
-      selector: "Email",
-      grow: 2,
+      accessorKey: "Email",
+      header: "Email",
     },
     {
-      name: "Mob Number",
-      selector: "MobileNumber",
+      accessorKey: "MobileNumber",
+      header: "Mob Number",
     },
     {
-      name: "SSN",
-      selector: "SSN",
+      accessorKey: "SSN",
+      header: "SSN",
     },
     {
-      name: "LinkedIn",
-      selector: "LinkedIn",
-      grow: 2,
+      accessorKey: "LinkedIn",
+      header: "LinkedIn",
     },
     {
-      name: "Payment Mode",
-      selector: "PaymentMode",
+      accessorKey: "PaymentMode",
+      header: "Payment Mode",
     },
     {
-      name: "US Entry year",
-      selector: "Us",
+      accessorKey: "Us",
+      header: "US Entry year",
     },
     {
-      name: "Availability",
-      selector: "Availability",
+      accessorKey: "Availability",
+      header: "Availability",
     },
     {
-      name: "Support",
-      selector: "Support",
+      accessorKey: "Support",
+      header: "Support",
     },
     {
-      name: "Comments",
-      selector: "Comments",
-      grow: 2,
+      accessorKey: "Comments",
+      header: "Comments",
     },
   ],
   [
     {
-      name: "Submitted By",
-      selector: "submittedBy",
-      grow: 2,
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-        minHeight: "100px",
-      },
+      accessorKey: "submittedBy",
+      header: "submitted By",
     },
     {
-      name: "Name",
-      selector: "Name",
+      accessorKey: "Name",
+      header: "Name",
     },
     {
-      name: "Email",
-      selector: "Email",
+      accessorKey: "Email",
+      header: "Email",
     },
     {
-      name: "Organization",
-      selector: "Organization",
+      accessorKey: "Organization",
+      header: "Organization",
     },
 
     {
-      name: "Mobile Number",
-      selector: "MobileNumber",
+      accessorKey: "MobileNumber",
+      header: "Mobile Number",
     },
     {
-      name: "Recruiter",
-      selector: "Recruiter",
+      accessorKey: "Recruiter",
+      header: "Recruiter Name",
     },
     {
-      name: "Comments",
-      selector: "Comments",
-    },
-  ],
-  [
-    {
-      name: "Submitted by",
-      selector: "submittedBy",
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-      },
-    },
-    {
-      name: "Name",
-      selector: "Name",
-    },
-    {
-      name: "Feedback",
-      selector: "Feedback",
+      accessorKey: "Comments",
+      header: "Comments",
     },
   ],
   [
     {
-      name: "Submitted by",
-      selector: "SubmittedBy",
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-      },
+      accessorKey: "submittedBy",
+      header: "submitted by",
     },
     {
-      name: "Date",
-      selector: "Date",
+      accessorKey: "Name",
+      header: "Name",
     },
     {
-      name: "Candidate Name",
-      selector: "CandidateName",
+      accessorKey: "Feedback",
+      header: "Feedback",
+    },
+  ],
+  [
+    {
+      accessorKey: "SubmittedBy",
+      header: "Submitted By",
     },
     {
-      name: "Technology",
-      selector: "Technology",
+      accessorKey: "Date",
+      header: "Date",
+    },
+    {
+      accessorKey: "CandidateName",
+      header: "Candidate Name",
+    },
+    {
+      accessorKey: "Technology",
+      header: "Technology",
     },
 
     {
-      name: "Timing",
-      selector: "Timing",
+      accessorKey: "Timing",
+      header: "Timing",
     },
     {
-      name: "Round",
-      selector: "Round",
+      accessorKey: "Round",
+      header: "Round",
     },
     {
-      name: "CallDuration",
-      selector: "CallDuration",
+      accessorKey: "CallDuration",
+      header: "CallDuration",
     },
     {
-      name: "Feedback",
-      selector: "Feedback",
+      accessorKey: "Feedback",
+      header: "Feedback",
     },
     {
-      name: "Support",
-      selector: "Support",
+      accessorKey: "Support",
+      header: "Support",
     },
   ],
   [
     {
-      name: "Submitted by",
-      selector: "SubmittedBy",
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-      },
+      accessorKey: "SubmittedBy",
+      header: "Submitted By",
     },
     {
-      name: "name",
-      selector: "name",
+      accessorKey: "Name",
+      header: "Name",
     },
     {
-      name: "Date",
-      selector: "Date",
+      accessorKey: "Date",
+      header: "Date",
     },
     {
-      name: "technology",
-      selector: "technology",
+      accessorKey: "technology",
+      header: "technology",
     },
     {
-      name: "visa",
-      selector: "visa",
+      accessorKey: "visa",
+      header: "visa",
     },
 
     {
-      name: "experience",
-      selector: "experience",
+      accessorKey: "experience",
+      header: "experience",
     },
     {
-      name: "location",
-      selector: "location",
+      accessorKey: "location",
+      header: "location",
     },
     {
-      name: "rate",
-      selector: "rate",
+      accessorKey: "rate",
+      header: "rate",
     },
     {
-      name: "canEmail",
-      selector: "canEmail",
+      accessorKey: "canEmail",
+      header: "canEmail",
     },
     {
-      name: "canPhNo",
-      selector: "canPhNo",
+      accessorKey: "canPhNo",
+      header: "canPhNo",
     },
     {
-      name: "empMail",
-      selector: "empMail",
+      accessorKey: "empMail",
+      header: "empMail",
     },
     {
-      name: "empNumber",
-      selector: "empNumber",
+      accessorKey: "empNumber",
+      header: "empNumber",
     },
     {
-      name: "status",
-      selector: "status",
-    },
-  ],
-  [
-    {
-      name: "Submitted by",
-      selector: "submittedBy",
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-      },
-    },
-    {
-      name: "Name",
-      selector: "Name",
-    },
-    {
-      name: "Rate",
-      selector: "Rate",
-    },
-    {
-      name: "Date",
-      selector: "Date",
-    },
-    {
-      name: "E mail",
-      selector: "Email",
-      grow: 3,
-    },
-    {
-      name: "Organization",
-      selector: "Organization",
-      grow: 2,
-    },
-    {
-      name: "Mobile Number",
-      selector: "MobileNumber",
-      grow: 2,
-    },
-    {
-      name: "Candidate",
-      selector: "Candidate",
-      grow: 2,
-    },
-    {
-      name: "End Client",
-      selector: "EndClient",
-      grow: 2,
-    },
-    {
-      name: "Feedback",
-      selector: "Feedback",
+      accessorKey: "status",
+      header: "status",
     },
   ],
   [
     {
-      name: "Submitted by",
-      selector: "submittedBy",
-      style: {
-        backgroundColor: "rgba(63, 195, 128, 0.9)",
-        color: "white",
-      },
+      accessorKey: "submittedBy",
+      header: "submitted by",
     },
     {
-      name: "Name",
-      selector: "name",
+      accessorKey: "Name",
+      header: "Name",
+    },
+    {
+      accessorKey: "Rate",
+      header: "Rate",
+    },
+    {
+      accessorKey: "Date",
+      header: "Date",
+    },
+    {
+      accessorKey: "Email",
+      header: "Email",
+    },
+    {
+      accessorKey: "Organization",
+      header: "Organization",
+    },
+    {
+      accessorKey: "MobileNumber",
+      header: "Mobile Number",
+    },
+    {
+      accessorKey: "Candidate",
+      header: "Candidate",
+    },
+    {
+      accessorKey: "EndClient",
+      header: "End Client",
+    },
+    {
+      accessorKey: "Feedback",
+      header: "Feedback",
+    },
+    {
+      accessorKey: "Recruiter",
+      header: "Recruiter",
+    },
+  ],
+  [
+    {
+      accessorKey: "submittedBy",
+      header: "submitted by",
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
     },
 
     {
-      name: "Date",
-      selector: "Date",
+      accessorKey: "Date",
+      header: "Date",
     },
     {
-      name: "technology",
-      selector: "technology",
-      grow: 3,
+      accessorKey: "technology",
+      header: "technology",
     },
     {
-      name: "visa",
-      selector: "visa",
-      grow: 2,
+      accessorKey: "visa",
+      header: "visa",
     },
     {
-      name: "relocation",
-      selector: "relocation",
-      grow: 2,
+      accessorKey: "relocation",
+      header: "relocation",
     },
     {
-      name: "expected rate",
-      selector: "expectedRate",
-      grow: 2,
+      accessorKey: "expectedRate",
+      header: "expected rate",
     },
     {
-      name: "client rate",
-      selector: "clientRate",
-      grow: 2,
+      accessorKey: "clientRate",
+      header: "client Rate",
     },
     {
-      name: "recruiter mail",
-      selector: "recruiterMail",
+      accessorKey: "recruiterMail",
+      header: "recruiter mail",
     },
     {
-      name: "recruiter Number",
-      selector: "recruiterNumber",
+      accessorKey: "recruiterNumber",
+      header: "recruiter number",
     },
     {
-      name: "required ID",
-      selector: "requiredId",
+      accessorKey: "requiredID",
+      header: "required Id",
     },
     {
-      name: "recruiter name",
-      selector: "recruiterName",
+      accessorKey: "recruiterName",
+      header: "recruiterName",
     },
   ],
 ];
