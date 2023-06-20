@@ -37,7 +37,7 @@ export default function AdminDashboard() {
       >
         <div className="w-[100%] text-white  ">
           <div className="text-3xl font-bold mb-4">Admin Dashboard</div>
-          <span>Version 4.2.1 stable</span>
+          <span>Version 4.2.2 stable</span>
           <div className="w-[100%] flex flex-col gap-4">
             <AddUser />
             <Forms />
