@@ -1,5 +1,4 @@
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { toast } from "react-toastify";
 
 export async function getParticularEmployeeScore(email: string, month: string) {
   const db = getFirestore();
@@ -9,7 +8,7 @@ export async function getParticularEmployeeScore(email: string, month: string) {
     value: string;
     month: string;
   }[] = [];
-  const docRef = doc(db, "productivityScore", email);
+  const docRef = await doc(db, "productivityScore", email);
   const docSnap = await getDoc(docRef);
   var total: number = 0;
   if (docSnap.exists()) {
@@ -33,5 +32,7 @@ export async function getParticularEmployeeScore(email: string, month: string) {
     const returnArray = temp.filter((ele) => ele.month === month);
     // console.log(returnArray);
     return returnArray;
+  } else {
+    return [];
   }
 }

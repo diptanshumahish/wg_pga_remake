@@ -21,15 +21,18 @@ import {
 
 import { Input } from "./input";
 import React from "react";
+import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  search: string;
 }
 
 export function DatTable<TData, TValue>({
   columns,
   data,
+  search,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -50,15 +53,15 @@ export function DatTable<TData, TValue>({
     <>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Name"
-          value={(table.getColumn("Name")?.getFilterValue() as string) ?? ""}
+          placeholder={`Search ${search}`}
+          value={(table.getColumn(search)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("Name")?.setFilterValue(event.target.value)
+            table.getColumn(search)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm text-white"
         />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border border-unselectedText bg-formBack">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -83,10 +86,14 @@ export function DatTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  className="border-b-unselectedText border-opacity-10"
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-1 px-4">
+                    <TableCell
+                      key={cell.id}
+                      className="py-2 px-4 text-xs min-w-[11vw]"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -109,19 +116,21 @@ export function DatTable<TData, TValue>({
         </Table>
         <div className="flex items-center justify-end space-x-2 py-4 mx-4">
           <button
-            className="bg-white text-slate-950 px-2 text-sm py-1 rounded-sm"
+            className="border border-white flex items-center gap-1 text-white px-2 text-xs py-1  hover:bg-white hover:text-slate-950 transition-colors active:bg-primary rounded-sm disabled:opacity-40"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            <CaretLeft />
+            <span>Previous</span>
           </button>
 
           <button
-            className="bg-white text-slate-950 px-2 text-sm py-1 rounded-sm"
+            className="border border-white flex items-center gap-1 text-white text-xs px-2 hover:bg-white hover:text-slate-950 transition-colors active:bg-primary  py-1 rounded-sm disabled:opacity-40"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            <span>Next</span>
+            <CaretRight />
           </button>
         </div>
       </div>

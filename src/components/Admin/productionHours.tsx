@@ -1,12 +1,12 @@
 import { getParticularEmployeeData } from "@/functions/Admin/getParticularEmployeeData";
 import { useState } from "react";
-import DataTable from "react-data-table-component";
+import { toast } from "react-toastify";
+import Drop from "../components/ui/Drop";
 
 export default function EmployeeProductionHours() {
   const [selectedMonth, setSelectedMonth] = useState("Select Month");
   const [empEmail, setEmpEmail] = useState("set Email");
   const [showData, setShowData] = useState(false);
-  const [prodColumns, setProdColumns] = useState(initData);
   var initData: any = [];
   const [tableData, setTableData] = useState(initData);
   return (
@@ -21,7 +21,7 @@ export default function EmployeeProductionHours() {
           <select
             name="month"
             id=""
-            className="bg-formBack p-2 pl-3 pr-3 shadow-md rounded-md text-[18px] cursor-pointer "
+            className="bg-formBack p-2 pl-3 pr-3 shadow-md rounded-md text-sm cursor-pointer "
             onChange={(e) => {
               setSelectedMonth(e.target.value);
             }}
@@ -99,12 +99,10 @@ export default function EmployeeProductionHours() {
               December
             </option>
           </select>
-          <input
-            type="text"
-            className="bg-formBack p-2 rounded-md shadow-md w-[100%]"
-            placeholder="Enter employee email "
-            onChange={(e) => {
-              setEmpEmail(e.target.value);
+          <Drop
+            onC={(val: string) => {
+              setShowData(false);
+              setEmpEmail(val);
             }}
           />
         </div>
@@ -115,10 +113,49 @@ export default function EmployeeProductionHours() {
             <button
               className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
               onClick={() => {
+                setEmpEmail("");
+                setTableData([]);
                 setShowData(true);
                 getParticularEmployeeData(empEmail, selectedMonth).then(
                   (value) => {
-                    setTableData(value);
+                    if (value?.length === 0) {
+                      toast.warn(
+                        "Check whether you have entered correct data",
+                        {
+                          position: "top-right",
+                          autoClose: 9000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
+                    } else {
+                      setTableData(value);
+                    }
+                  }
+                );
+                getParticularEmployeeData(empEmail, selectedMonth).then(
+                  (value) => {
+                    if (value?.length === 0) {
+                      toast.warn(
+                        "Check whether you have entered correct data",
+                        {
+                          position: "top-right",
+                          autoClose: 9000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
+                    } else {
+                      setTableData(value);
+                    }
                   }
                 );
               }}
@@ -139,7 +176,7 @@ export default function EmployeeProductionHours() {
                 ) => {
                   return (
                     <div
-                      className="flex flex-col items-center justify-center bg-white  rounded-md overflow-hidden"
+                      className="flex mt-6 flex-col items-center justify-center bg-white  rounded-md overflow-hidden"
                       key={idx}
                     >
                       <span className="bg-red w-[100%] py-2 px-5 flex items-center justify-center font-bold text-xl">
@@ -160,9 +197,41 @@ export default function EmployeeProductionHours() {
             className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
             onClick={() => {
               setShowData(true);
+
               getParticularEmployeeData(empEmail, selectedMonth).then(
                 (value) => {
-                  setTableData(value);
+                  if (value?.length === 0) {
+                    toast.warn("Check whether you have entered correct data", {
+                      position: "top-right",
+                      autoClose: 9000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                  } else {
+                    setTableData(value);
+                  }
+                }
+              );
+              getParticularEmployeeData(empEmail, selectedMonth).then(
+                (value) => {
+                  if (value?.length === 0) {
+                    toast.warn("Check whether you have entered correct data", {
+                      position: "top-right",
+                      autoClose: 9000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
+                  } else {
+                    setTableData(value);
+                  }
                 }
               );
             }}

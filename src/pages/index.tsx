@@ -44,11 +44,11 @@ export default function Home() {
         <WelcomeWrapper />
         <Clock />
 
-        <div
-          className="absolute bottom-0 right-0 text-white p-2"
-          style={{ letterSpacing: "0.2rem" }}
-        >
+        <div className="absolute bottom-0 right-0 text-white p-2 flex flex-col">
           &copy; Warrior&apos;s group LLC 2023
+          <span className="text-right font-xs text-unselectedText">
+            version 4.3
+          </span>
         </div>
       </div>
     </>

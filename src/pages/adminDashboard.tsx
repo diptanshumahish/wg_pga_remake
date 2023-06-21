@@ -13,7 +13,7 @@ import { useEffect } from "react";
 export default function AdminDashboard() {
   const auth = getAuth();
   useEffect(() => {
-    if (auth.currentUser?.uid !== "KmQvoef8iLN6bzBjwsKR3YWyDq53") {
+    if (auth.currentUser?.uid !== "KZt8lwByQoRXtogIMPaYtcFMJty2") {
       navigate({ navigateTo: "/", replace: true });
     }
   }, []);

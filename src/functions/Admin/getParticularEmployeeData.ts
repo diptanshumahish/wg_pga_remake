@@ -1,4 +1,4 @@
-import { DocumentData, doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 export async function getParticularEmployeeData(email: string, month: string) {
   const db = getFirestore();
@@ -8,7 +8,7 @@ export async function getParticularEmployeeData(email: string, month: string) {
     value: string;
     month: string;
   }[] = [];
-  const docRef = doc(db, "workHour", email);
+  const docRef = await doc(db, "workHour", email);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     var data = Object.entries(docSnap.data());
@@ -25,5 +25,7 @@ export async function getParticularEmployeeData(email: string, month: string) {
     });
     const returnArray = temp.filter((ele) => ele.month === month);
     return returnArray;
+  } else {
+    return [];
   }
 }

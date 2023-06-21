@@ -23,6 +23,15 @@ export default function Forms() {
     "submissions",
     "missingRate",
   ];
+  const search: string[] = [
+    "Name",
+    "Name",
+    "Name",
+    "CandidateName",
+    "Name",
+    "Name",
+    "Name",
+  ];
   const [activeIndex, setActiveIndex] = useState(0);
   const initData: any[] = [];
   const [dataArray, setDataArray] = useState(initData);
@@ -88,7 +97,11 @@ export default function Forms() {
         </div>
       ) : (
         // <DataTable columns={columnsData} data={dataArray} pagination  />
-        <DatTable columns={columnsData} data={dataArray} />
+        <DatTable
+          columns={columnsData}
+          data={dataArray}
+          search={search[activeIndex]}
+        />
       )}
     </div>
   );

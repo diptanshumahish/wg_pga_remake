@@ -1,6 +1,8 @@
 import { getParticularEmployeeScore } from "@/functions/Admin/getScoreEmp";
 import React, { useState } from "react";
 import { DotLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import Drop from "../components/ui/Drop";
 
 export default function ProdScoreEmp() {
   const [showData, setShowData] = useState(false);
@@ -27,7 +29,7 @@ export default function ProdScoreEmp() {
           <select
             name="month"
             id=""
-            className="bg-formBack p-2 pl-3 pr-3 shadow-md rounded-md text-[18px] cursor-pointer "
+            className="bg-formBack p-2 pl-3 pr-3 shadow-md rounded-md text-sm cursor-pointer "
             onChange={(e) => {
               setSelectedMonth(e.target.value);
             }}
@@ -105,12 +107,11 @@ export default function ProdScoreEmp() {
               December
             </option>
           </select>
-          <input
-            type="text"
-            className="bg-formBack p-2 rounded-md shadow-md w-[100%]"
-            placeholder="Enter employee email "
-            onChange={(e) => {
-              setEmpEmail(e.target.value);
+
+          <Drop
+            onC={(val: string) => {
+              setShowData(false);
+              setEmpEmail(val);
             }}
           />
         </div>
@@ -121,11 +122,26 @@ export default function ProdScoreEmp() {
             <button
               className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
               onClick={() => {
-                setShowData(false);
+                setShowData(true);
                 getParticularEmployeeScore(empEmail, selectedMonth).then(
                   (val) => {
-                    setShowData(true);
-                    setDataArray(val!);
+                    if (val?.length === 0) {
+                      toast.warn(
+                        "Check whether you have entered correct data",
+                        {
+                          position: "top-right",
+                          autoClose: 9000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
+                    } else {
+                      setDataArray(val!);
+                    }
                   }
                 );
               }}
@@ -155,11 +171,28 @@ export default function ProdScoreEmp() {
           <div>
             <button
               className="bg-inputBack w-fit p-1 px-2 rounded-sm text-white font-bold"
-              onClick={() => {
+              onClick={async () => {
                 setShowData(true);
                 getParticularEmployeeScore(empEmail, selectedMonth).then(
                   (val) => {
-                    setDataArray(val!);
+                    if (val?.length !== 0) {
+                      setShowData(true);
+                      setDataArray(val!);
+                    } else {
+                      toast.warn(
+                        "Check whether you have entered correct data",
+                        {
+                          position: "top-right",
+                          autoClose: 9000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "dark",
+                        }
+                      );
+                    }
                   }
                 );
               }}
