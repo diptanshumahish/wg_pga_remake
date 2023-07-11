@@ -36,12 +36,24 @@ const Employees = [
     label: "rudra@warriorsgrp.com",
   },
   {
-    value: "mery@warriorsgrp.com",
-    label: "mery@warriorsgrp.com",
-  },
-  {
     value: "peter@warriorsgrp.com",
     label: "peter@warriorsgrp.com",
+  },
+  {
+    value: "Hruchitha@warriorsgrp.com",
+    label: "Hruchitha@warriorsgrp.com",
+  },
+  {
+    value: "Sandhya@warriorsgrp.com",
+    label: "Sandhya@warriorsgrp.com",
+  },
+  {
+    value: "Kiran@warriorsgrp.com",
+    label: "Kiran@warriorsgrp.com",
+  },
+  {
+    value: "Chandra@warriorsgrp.com",
+    label: "Chandra@warriorsgrp.com",
   },
 ];
 interface Props {
