@@ -86,7 +86,7 @@ export default function SendMail({ visibility }: Props) {
                   onDrop={(e) => {
                     e.preventDefault();
                     setHighight(false);
-
+                    
                     Array.from(e.dataTransfer.files)
                       .filter((ele) => ele.type === "text/csv")
                       .forEach(async (ele) => {
@@ -94,6 +94,7 @@ export default function SendMail({ visibility }: Props) {
                         const res = await parse<emails>(text, {
                           header: true,
                         });
+                        console.log(res.data);
                         setEmails(res.data);
                       });
                     toast.success("Sucessfully added the CSV", {
@@ -128,6 +129,7 @@ export default function SendMail({ visibility }: Props) {
                             const res = await parse<emails>(text, {
                               header: true,
                             });
+                            console.log(res.data);
                             setEmails(res.data);
                           });
                         toast.success("Sucessfully added the CSV", {
