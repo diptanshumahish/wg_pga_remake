@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 interface Message {
   to: { name: string; email: string }[];
-  from?: string;
+  from: string;
   subject: string;
   text: string;
   html: string;
@@ -22,7 +22,7 @@ async function sendMessage({ to, from, html, subject, text }: Message) {
     if (ele.name !== "" || ele.email !== "") {
       const message = {
         to: ele.email,
-        from: "rudra@warriorsgrp.com",
+        from: from,
         subject: subject,
         text: text,
         html: `<h4>Hi ${ele.name},</h4> <br>${html}`,
