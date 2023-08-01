@@ -12,7 +12,7 @@ interface Message {
   html: string;
 }
 const API_KEY =
-  "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";
+  "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";
 // "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";
 
 async function sendMessage({ to, from, html, subject, text }: Message) {
