@@ -25,14 +25,13 @@ export default function Home() {
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick
+		  closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
         theme="light"
       />
-
       <div
         className="h-screen w-screen flex  flex-col  items-center justify-center"
         style={{
