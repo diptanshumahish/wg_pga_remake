@@ -258,37 +258,46 @@ export default function SendMail({ visibility }: Props) {
                         <div>
                             <div className="text-xl">
                                 4. Add attachments if required (multiple files
-                                allowed as well)
+                                allowed as well, leave empty if none)
                             </div>
                             <div>
                                 {/* Display selected files */}
                                 <div className="flex gap-6 flex-wrap py-4 ">
-                                    {userFiles.map((file, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex relative flex-col rounded-sm bg-formBack p-2 text-xs items-center gap-2 border border-primary"
-                                        >
-                                            <span className="max-w-[80px] max-h-[20px] overflow-hidden">
-                                                {file.filename}
-                                            </span>
-
-                                            <button
-                                                className="bg-white rounded-full text-slate-950 absolute -top-3 p-1 -right-3"
-                                                onClick={() => {
-                                                    // Remove file from the array
-                                                    setUserFiles((prevFiles) =>
-                                                        prevFiles.filter(
-                                                            (prevFile) =>
-                                                                prevFile !==
-                                                                file
-                                                        )
-                                                    );
-                                                }}
+                                    {userFiles.length !== 0 &&
+                                        userFiles.map((file, index) => (
+                                            <div
+                                                key={index}
+                                                className="flex relative flex-col rounded-sm bg-formBack p-2 text-xs items-center gap-2 border border-primary"
                                             >
-                                                <X />
-                                            </button>
-                                        </div>
-                                    ))}
+                                                <span className="max-w-[80px] max-h-[20px] overflow-hidden">
+                                                    {file.filename}
+                                                </span>
+
+                                                <button
+                                                    className="bg-white rounded-full text-slate-950 absolute -top-3 p-1 -right-3"
+                                                    onClick={() => {
+                                                        // Remove file from the array
+                                                        setUserFiles(
+                                                            (prevFiles) =>
+                                                                prevFiles.filter(
+                                                                    (
+                                                                        prevFile
+                                                                    ) =>
+                                                                        prevFile !==
+                                                                        file
+                                                                )
+                                                        );
+                                                    }}
+                                                >
+                                                    <X />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    {userFiles.length === 0 && (
+                                        <span className="opacity-60">
+                                            No files added yet
+                                        </span>
+                                    )}
                                 </div>
 
                                 {/* Input for adding files */}
@@ -296,7 +305,7 @@ export default function SendMail({ visibility }: Props) {
                                     htmlFor="fileInput"
                                     className="cursor-pointer w-fit"
                                 >
-                                    <span className="bg-formBack w-fit items-center gap-2 hover:bg-white hover:text-slate-950 flex p-2 px-6 rounded-sm text-white">
+                                    <span className="bg-formBack w-fit items-center gap-2 transition-colors hover:bg-white hover:text-slate-950 flex p-2 px-6 rounded-sm text-white">
                                         <PlusCircle /> add files
                                     </span>
                                     <input
@@ -413,10 +422,8 @@ export default function SendMail({ visibility }: Props) {
                                 </span>{" "}
                                 <table className="bg-formBack rounded-md w-[100%] ">
                                     <tr className="bg-primary">
-                                        <th className="text-left p-4 ">
-                                            Email
-                                        </th>
-                                        <th className="text-left p-4">Name</th>
+                                        <th className="text-left p-4 ">Name</th>
+                                        <th className="text-left p-4">Email</th>
                                     </tr>
 
                                     {emails.map((ele, idx) => {
