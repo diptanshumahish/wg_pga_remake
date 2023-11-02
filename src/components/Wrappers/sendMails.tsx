@@ -22,7 +22,14 @@ export default function SendMail({ visibility }: Props) {
     const [htmlText, setHtmlText] = useState(store.getState().changeHtml);
     const [highlight, setHighight] = useState(false);
     const [drop, setDrop] = useState("Drop CSV your file here");
-    const [userFiles, setUserFiles] = useState([]);
+    const [userFiles, setUserFiles] = useState<
+        Array<{
+            content: string;
+            filename: string;
+            type: string;
+            disposition: string;
+        }>
+    >([]);
     const userEmail = store.getState().email;
     store.subscribe(() => {
         setHtmlText(store.getState().changeHtml);
@@ -297,14 +304,22 @@ export default function SendMail({ visibility }: Props) {
                                         id="fileInput"
                                         multiple
                                         className="hidden"
-                                        onChange={(e) => {
+                                        onChange={(
+                                            e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
                                             const files = Array.from(
-                                                e.target.files
+                                                e.target.files as FileList
                                             );
-                                            const newFiles = [];
+                                            const newFiles: Array<{
+                                                content: string;
+                                                filename: string;
+                                                type: string;
+                                                disposition: string;
+                                            }> = [];
 
-                                            const addFile = async (file) => {
-                                                console.log(file);
+                                            const addFile = async (
+                                                file: File
+                                            ) => {
                                                 const base64String =
                                                     await fileToBase64(file);
 
@@ -325,7 +340,7 @@ export default function SendMail({ visibility }: Props) {
                                                         ]
                                                     );
 
-                                                    console.log(userFiles);
+                                                    console.log(userFiles); // Note: State updates are asynchronous, so you may not see the updated state immediately after setting it
                                                 } else {
                                                     console.error(
                                                         "Failed to convert file to base64."

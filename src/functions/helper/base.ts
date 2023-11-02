@@ -17,8 +17,8 @@ export function fileToBase64(file: File): Promise<string | null> {
 
         try {
             reader.readAsDataURL(file);
-        } catch (error) {
-            reject(new Error("Error reading file: " + error.message));
+        } catch (e) {
+            reject(new Error("Error reading file: " + e));
         }
     });
 }
