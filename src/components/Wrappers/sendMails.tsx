@@ -7,6 +7,7 @@ import { parse } from "papaparse";
 import { resetHtml, setHtml } from "@/state-mangement/store/slices/storeHtml";
 import { toast } from "react-toastify";
 import { fileToBase64 } from "@/functions/helper/base";
+import fs from "fs";
 interface Props {
     visibility: boolean;
 }
@@ -329,32 +330,52 @@ export default function SendMail({ visibility }: Props) {
                                             const addFile = async (
                                                 file: File
                                             ) => {
-                                                const base64String =
-                                                    await fileToBase64(file);
+                                                const reader = new FileReader();
 
-                                                if (base64String !== null) {
-                                                    newFiles.push({
-                                                        content:
-                                                            base64String.toString(),
-                                                        filename: file.name,
-                                                        type: file.type,
-                                                        disposition:
-                                                            "attachment",
-                                                    });
+                                                reader.onload = (event) => {
+                                                    const base64String = event
+                                                        .target
+                                                        ?.result as string;
 
-                                                    setUserFiles(
-                                                        (prevFiles) => [
-                                                            ...prevFiles,
-                                                            ...newFiles,
-                                                        ]
+                                                    const plainBase64String =
+                                                        base64String.split(
+                                                            ","
+                                                        )[1];
+
+                                                    const buffer = Buffer.from(
+                                                        base64String,
+                                                        "utf-8"
+                                                    ).toString("base64");
+                                                    console.log(
+                                                        plainBase64String
                                                     );
 
-                                                    console.log(userFiles); // Note: State updates are asynchronous, so you may not see the updated state immediately after setting it
-                                                } else {
-                                                    console.error(
-                                                        "Failed to convert file to base64."
-                                                    );
-                                                }
+                                                    if (base64String !== null) {
+                                                        newFiles.push({
+                                                            content:
+                                                                plainBase64String,
+                                                            filename: file.name,
+                                                            type: file.type,
+                                                            disposition:
+                                                                "attachment",
+                                                        });
+
+                                                        setUserFiles(
+                                                            (prevFiles) => [
+                                                                ...prevFiles,
+                                                                ...newFiles,
+                                                            ]
+                                                        );
+
+                                                        console.log(userFiles); // Note: State updates are asynchronous, so you may not see the updated state immediately after setting it
+                                                    } else {
+                                                        console.error(
+                                                            "Failed to convert file to base64."
+                                                        );
+                                                    }
+                                                };
+
+                                                reader.readAsDataURL(file);
                                             };
 
                                             files.forEach(addFile);
