@@ -75,7 +75,7 @@ export default function Login() {
         onActionChange={() => {
           signInWithEmailAndPassword(getAuth(), userEmail, userPass)
             .then((value) => {
-              if (value.user.email !== "contact@warriorsgrp.com") {
+              if (value.user.email !== "catchmflixx@gmail.com") {
                 // second time login
                 if (Cookies.get("updateDate") === "updated") {
                   Cookies.set(

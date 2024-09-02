@@ -6,17 +6,17 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Work @ WGLLC</title>
-        <meta name="application-name" content="Warriors Group Work" />
+        <title>Work @ Catchmflixx</title>
+        <meta name="application-name" content="Catchmflixx-work" />
         <meta
           name="description"
-          content="The official work app for Warriors Group LLC"
+          content="The official work app for Catchmflixx"
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta
           name="apple-mobile-web-app-title"
-          content="Warriors Group LLC @work"
+          content="Catchmflixx @work"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

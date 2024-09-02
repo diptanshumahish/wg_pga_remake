@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Warriors group LLC",
+  "name": "Catchmflixx LLC",
   "short_name": "wg_pwa",
-  "description": "The official work application for employees at Warriors Group LLC",
+  "description": "The official work application for employees at Catchmflixx LLC",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",

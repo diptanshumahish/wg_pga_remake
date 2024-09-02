@@ -56,7 +56,7 @@ export default function ClockFunctionality() {
         <button
           onClick={() => {
             location.href =
-              "mailto:diptanshumahish2016@gmail.com?subject=Bugs in Warriors Group LLC Work App&body=Hello, I found the following bugs in your app:";
+              "mailto:diptanshumahish2016@gmail.com?subject=Bugs in Catchmflixx LLC Work App&body=Hello, I found the following bugs in your app:";
           }}
           className="bg-red p-3 rounded-sm shadow-md flex gap-2 items-center justify-between text-white"
         >

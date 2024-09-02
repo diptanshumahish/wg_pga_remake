@@ -66,7 +66,7 @@ export default function Welcome() {
       <Image src="/assets/load.png" height={200} width={300} alt="MainLogo" />
       <div className="flex flex-col">
         <span className="font-sans text-white font-bold text-3xl">
-          Warriors&apos;s Group LLC
+          Catchmflixx
         </span>
         <span className="text-white font-sans text-center">Work</span>
       </div>

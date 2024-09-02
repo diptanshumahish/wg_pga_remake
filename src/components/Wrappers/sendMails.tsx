@@ -73,9 +73,9 @@ export default function SendMail({ visibility }: Props) {
                         Make sure you are using this bulk mailing feature only
                         when needed,
                     </div>
-                    {/* main work area  */}
+               
                     <div className="p-4 flex flex-col gap-4">
-                        {/* email enter */}
+                    
                         <div>
                             <div className="text-xl">
                                 1. Enter the emails as a CSV File below
