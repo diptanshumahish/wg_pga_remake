@@ -44,7 +44,7 @@ export default function Home() {
         <Clock />
 
         <div className="absolute bottom-0 right-0 text-white p-2 flex flex-col">
-          &copy; Warrior&apos;s group LLC 2023
+          &copy; Catchmflixx 2024
           <span className="text-right font-xs text-unselectedText">
             version 4.3
           </span>
