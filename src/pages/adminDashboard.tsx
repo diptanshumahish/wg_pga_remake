@@ -46,7 +46,7 @@ export default function AdminDashboard() {
       >
         <div className="w-[100%] text-white  ">
           <div className="flex justify-between">
-            <div className="text-3xl font-bold mb-4 ">Admin Dashboard</div>
+            <div className="text-3xl font-bold mb-4 ">Admin Dashboard </div>
             <button
               onClick={() => {
                 auth.signOut().then(() => {
