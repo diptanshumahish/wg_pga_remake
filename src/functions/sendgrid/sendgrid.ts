@@ -19,7 +19,7 @@ interface Message {
 }
 const API_KEY =
     // "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";
-    "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";
+    "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";
 async function sendMessage({
     to,
     from,
