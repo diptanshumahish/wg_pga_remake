@@ -35,7 +35,7 @@ async function sendMessage({
         if (ele.name !== "" || ele.email !== "") {
             const message = {
                 to: ele.email,
-                from: from,
+                from: "peter@warriorsgit.com",
                 subject: subject,
                 text: text,
                 html: `<h4>Hi ${ele.name},</h4> <br>${html}`,
